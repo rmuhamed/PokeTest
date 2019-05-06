@@ -29,6 +29,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pokemon_picture"
                 android:layout_width="@dimen/picture_size_detail"
                 android:layout_height="@dimen/picture_size_detail"
                 android:layout_gravity="center_horizontal"
@@ -40,6 +41,20 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/label_size_normal"
                 tools:text="@string/name_placeholder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size_normal"
+                tools:text="@string/type" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_base_experience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size_normal"
+                tools:text="@string/base_experience" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_weight"
@@ -67,6 +82,5 @@
         app:layout_constraintRight_toRightOf="@id/poke_info_container"
         app:layout_constraintTop_toTopOf="@id/poke_info_container"
         tools:visibility="gone" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

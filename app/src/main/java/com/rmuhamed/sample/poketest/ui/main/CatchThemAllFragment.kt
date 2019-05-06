@@ -1,14 +1,14 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-
+import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
 class CatchThemAllFragment : Fragment() {
@@ -32,9 +32,15 @@ class CatchThemAllFragment : Fragment() {
             poke_info_container.visibility = View.VISIBLE
             loading.visibility = View.INVISIBLE
 
+            Picasso.get().load(it.picture)
+                    .placeholder(R.drawable.ic_pokedex_placeholder)
+                    .into(pokemon_picture)
+
             pokemon_name.text = it.name
             pokemon_height.text = it.height
             pokemon_weight.text = it.weight
+            pokemon_type.text = it.type
+            pokemon_base_experience.text = it.baseExperience
         })
     }
 

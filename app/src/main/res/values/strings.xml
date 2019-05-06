@@ -12,4 +12,6 @@
     <string name="height_placeholder">Height</string>
     <string name="weight_placeholder">Weight</string>
     <string name="name_placeholder">Name</string>
+    <string name="base_experience">Base experience</string>
+    <string name="type">Type</string>
 </resources>
