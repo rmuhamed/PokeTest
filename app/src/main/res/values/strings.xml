@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PokeTest</string>
+    <string name="backpack">Backpack</string>
+    <string name="search_and_catch">Search all over the world</string>
+
+    <string name="image_description">Pokemon image</string>
+
+    <string name="pokemon_name">PokeName</string>
+    <string name="pokemon_weight">50lib</string>
+    <string name="pokemon_height">30m</string>
+    <string name="pokemon_catched_time">30-06-2019</string>
+    <string name="height_placeholder">Height</string>
+    <string name="weight_placeholder">Weight</string>
+    <string name="name_placeholder">Name</string>
+</resources>

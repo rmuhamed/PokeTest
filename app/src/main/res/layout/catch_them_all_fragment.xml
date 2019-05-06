@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical"
+    tools:context=".ui.main.CatchThemAllFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/poke_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_normal"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/margin_small"
+        app:cardElevation="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_normal"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/picture_size_detail"
+                android:layout_height="@dimen/picture_size_detail"
+                android:layout_gravity="center_horizontal"
+                tools:src="@drawable/ic_pokedex_placeholder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size_normal"
+                tools:text="@string/name_placeholder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size_normal"
+                tools:text="@string/weight_placeholder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokemon_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size_normal"
+                tools:text="@string/height_placeholder" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="@dimen/progress"
+        android:layout_height="@dimen/progress"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/poke_info_container"
+        app:layout_constraintLeft_toLeftOf="@id/poke_info_container"
+        app:layout_constraintRight_toRightOf="@id/poke_info_container"
+        app:layout_constraintTop_toTopOf="@id/poke_info_container"
+        tools:visibility="gone" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

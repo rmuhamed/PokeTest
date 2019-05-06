@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_backpack"
+        android:title="@string/backpack" />
+    <item
+        android:icon="@drawable/ic_search_to_catch"
+        android:title="@string/search_and_catch" />
+</menu>
