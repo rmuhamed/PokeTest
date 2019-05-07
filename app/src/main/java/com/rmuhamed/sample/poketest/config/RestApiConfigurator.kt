@@ -1,9 +1,9 @@
 package com.rmuhamed.sample.poketest.config
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class RestApiConfigurator private constructor() {
 
@@ -20,6 +20,7 @@ class RestApiConfigurator private constructor() {
                     .build()
         }
 
+        @JvmStatic
         fun createApi(baseUrl: String): RestApiDefinition {
             if (retrofit == null) {
                 retrofit = this.configure(baseUrl)

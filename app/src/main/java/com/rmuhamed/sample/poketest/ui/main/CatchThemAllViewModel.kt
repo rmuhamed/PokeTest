@@ -1,41 +1,35 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rmuhamed.sample.poketest.config.RestApiConfigurator
-import com.rmuhamed.sample.poketest.config.RestApiDefinition
 import com.rmuhamed.sample.poketest.data.AsyncResult
-import com.rmuhamed.sample.poketest.data.RestApiRepository
+import com.rmuhamed.sample.poketest.data.IRepository
+import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 
-class CatchThemAllViewModel : ViewModel() {
+class CatchThemAllViewModel(private val repository: IRepository<Pokemon, Error>)
+    : ViewModel(), AsyncResult<Pokemon, Error> {
     val observable = MutableLiveData<Pokemon>()
 
     init {
+        bindToDataSource()
         fetch()
     }
 
+    private fun bindToDataSource() {
+        repository.addObserver(this)
+    }
+
     private fun fetch() {
-        val api: RestApiDefinition =
-                RestApiConfigurator.createApi("https://pokeapi.co/api/v2/")
 
-        val asyncResult =
-                object : AsyncResult<Pokemon, Error> {
-                    override fun onSuccess(result: Pokemon?) {
-                        Log.d("SUCCESS", "Here I am")
-                        observable.value = result
-                    }
+        repository.findBy(100)
+    }
 
-                    override fun onError(error: Error?) {
-                        Log.d("ERROR", ":(")
-                    }
+    override fun onSuccess(result: Pokemon?) {
+        observable.postValue(result)
+    }
 
-                }
-
-        val repo = RestApiRepository(api, asyncResult);
-
-        repo.findBy(90)
+    override fun onError(error: Error?) {
+        //TODO: RM - Make a wrapper UI object instead of entity (both success and error)
     }
 }

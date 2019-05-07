@@ -2,12 +2,8 @@ package com.rmuhamed.sample.poketest.data;
 
 import com.rmuhamed.sample.poketest.config.RestApiDefinition;
 import com.rmuhamed.sample.poketest.data.dto.PokemonResponseDTO;
+import com.rmuhamed.sample.poketest.model.Error;
 import com.rmuhamed.sample.poketest.model.Pokemon;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,12 +13,15 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
 
     private static final String IMPLEMENTATION_ABSENT_ERROR = "Not applicable for this kind of repo";
     private final RestApiDefinition apiDefinition;
-    private final AsyncResult<Pokemon, Error> asyncResult;
+    private AsyncResult<Pokemon, Error> observer;
 
-    public RestApiRepository(RestApiDefinition apiDefinition,
-                             AsyncResult<Pokemon, Error> asyncResult) {
+    RestApiRepository(RestApiDefinition apiDefinition) {
         this.apiDefinition = apiDefinition;
-        this.asyncResult = asyncResult;
+    }
+
+    @Override
+    public void addObserver(AsyncResult<Pokemon, Error> observer) {
+        this.observer = observer;
     }
 
     @Override
@@ -42,16 +41,16 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
                         .setPicture(dto.getSprites().getFront())
                         .build();
 
-                asyncResult.onSuccess(pokemon);
+                observer.onSuccess(pokemon);
             }
 
             @Override
             public void onFailure(Call<PokemonResponseDTO> call, Throwable t) {
-                asyncResult.onError(new Error(t.getMessage()));
+                observer.onError(new Error(t.getMessage()));
             }
         });
 
-        return asyncResult;
+        return observer;
     }
 
     @Override
