@@ -40,10 +40,10 @@ class CatchThemAllFragment : Fragment() {
                     .into(pokemon_picture)
 
             pokemon_name.text = it.name
-            pokemon_height.text = it.height
-            pokemon_weight.text = it.weight
-            pokemon_type.text = it.type
-            pokemon_base_experience.text = it.baseExperience
+            pokemon_height.text = getString(R.string.height_placeholder, it.height)
+            pokemon_weight.text = getString(R.string.weight_placeholder, it.weight)
+            pokemon_type.text = getString(R.string.type_placeholder, it.type)
+            pokemon_base_experience.text = getString(R.string.base_experience_placeholder, it.baseExperience)
         })
     }
 

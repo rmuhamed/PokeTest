@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/light_grey"
     android:orientation="vertical"
     tools:context=".ui.main.CatchThemAllFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/poke_info_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_normal"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_big"
         android:visibility="gone"
-        app:cardCornerRadius="@dimen/margin_small"
+        app:cardCornerRadius="@dimen/margin_normal"
         app:cardElevation="@dimen/margin_small"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_normal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/margin_normal">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/pokemon_picture"
@@ -39,27 +38,33 @@
                 android:id="@+id/pokemon_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/label_size_normal"
+                android:layout_margin="@dimen/margin_small"
+                android:textColor="@color/black"
+                android:textSize="@dimen/label_size_title"
+                android:textStyle="bold"
                 tools:text="@string/name_placeholder" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
                 android:textSize="@dimen/label_size_normal"
-                tools:text="@string/type" />
+                tools:text="@string/type_placeholder" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_base_experience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
                 android:textSize="@dimen/label_size_normal"
-                tools:text="@string/base_experience" />
+                tools:text="@string/base_experience_placeholder" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pokemon_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
                 android:textSize="@dimen/label_size_normal"
                 tools:text="@string/weight_placeholder" />
 
@@ -67,10 +72,39 @@
                 android:id="@+id/pokemon_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
                 android:textSize="@dimen/label_size_normal"
                 tools:text="@string/height_placeholder" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/skip_it"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:tint="@color/white"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/skip_it_button_drawable"
+        android:src="@drawable/ic_skip_this_round"
+        app:layout_constraintRight_toLeftOf="@id/catch_it"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/poke_info_container" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/catch_it"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:tint="@color/white"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/catch_it_button_drawable"
+        android:src="@drawable/ic_pokeball"
+        app:layout_constraintLeft_toRightOf="@id/skip_it"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/poke_info_container" />
+
 
     <ProgressBar
         android:id="@+id/loading"
