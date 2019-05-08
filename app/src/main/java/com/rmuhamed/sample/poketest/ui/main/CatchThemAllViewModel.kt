@@ -13,16 +13,20 @@ class CatchThemAllViewModel(private val repository: IRepository<Pokemon, Error>)
 
     init {
         bindToDataSource()
-        fetch()
+        fetch((1..150).shuffled().first())
     }
 
     private fun bindToDataSource() {
         repository.addObserver(this)
     }
 
-    private fun fetch() {
+    private fun fetch(id: Int) {
+        repository.findBy(id)
+    }
 
-        repository.findBy(100)
+    fun haveItInBackpack(id: Int) {
+        //How to handle all with same common interface but with different underlay dataSources
+        repository.exists(id)
     }
 
     override fun onSuccess(result: Pokemon?) {

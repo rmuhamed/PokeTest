@@ -9,4 +9,10 @@ public interface IRepository<T, E> {
     Boolean save(T toBeSaved);
 
     void addObserver(AsyncResult<T, E> observer);
+
+    default Boolean exists(Integer id) {
+        return false;
+    }
+
+    ;
 }
