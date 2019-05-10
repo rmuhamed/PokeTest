@@ -34,7 +34,7 @@ class CatchThemAllViewModel(
 
     override fun onSuccess(result: Pokemon?) {
         pokemonInfoObservable.postValue(result)
-        catchItButtonObservable.postValue(persistenceRepository.exists(id.toString()))
+        //catchItButtonObservable.postValue(persistenceRepository.exists(id.toString()))
     }
 
     override fun onError(error: Error?) {

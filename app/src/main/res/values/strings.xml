@@ -13,6 +13,6 @@
     <string name="weight_placeholder">Weight %s</string>
     <string name="name_placeholder">Name</string>
     <string name="type_placeholder">Type %s</string>
-    <string name="base_experience_placeholder">Base experience %s</string>
+    <string name="base_experience_placeholder">Base Exp. %s</string>
 
 </resources>
