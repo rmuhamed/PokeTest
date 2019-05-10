@@ -7,7 +7,10 @@ import com.rmuhamed.sample.poketest.data.IRepository
 import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 
-class CatchThemAllViewModel(private val repository: IRepository<Pokemon, Error>)
+class CatchThemAllViewModel(
+    private val networkRepository: IRepository<Pokemon, Error>,
+    private val persistenceRepository: IRepository<Pokemon, Error>
+)
     : ViewModel(), AsyncResult<Pokemon, Error> {
     val observable = MutableLiveData<Pokemon>()
 
@@ -17,16 +20,15 @@ class CatchThemAllViewModel(private val repository: IRepository<Pokemon, Error>)
     }
 
     private fun bindToDataSource() {
-        repository.addObserver(this)
+        networkRepository.addObserver(this)
     }
 
     private fun fetch(id: Int) {
-        repository.findBy(id)
+        networkRepository.findBy(id)
     }
 
-    fun haveItInBackpack(id: Int) {
-        //How to handle all with same common interface but with different underlay dataSources
-        repository.exists(id)
+    fun haveItInBackpack(id: String) {
+        persistenceRepository.exists(id)
     }
 
     override fun onSuccess(result: Pokemon?) {

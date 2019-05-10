@@ -1,10 +1,11 @@
 package com.rmuhamed.sample.poketest.data;
 
+import androidx.annotation.Nullable;
 import com.rmuhamed.sample.poketest.config.RestApiDefinition;
-import com.rmuhamed.sample.poketest.data.dto.PokemonResponseDTO;
+import com.rmuhamed.sample.poketest.data.dto.PokemonDTO;
 import com.rmuhamed.sample.poketest.model.Error;
 import com.rmuhamed.sample.poketest.model.Pokemon;
-
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,12 +27,26 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
 
     @Override
     public AsyncResult<Pokemon, Error> findBy(Integer id) {
-        apiDefinition.fetchBy(id).enqueue(new Callback<PokemonResponseDTO>() {
+        this.apiDefinition.fetchBy(id).enqueue(new Callback<PokemonDTO>() {
             @Override
-            public void onResponse(Call<PokemonResponseDTO> call, Response<PokemonResponseDTO> response) {
-                PokemonResponseDTO dto = response.body();
+            public void onResponse(@NotNull Call<PokemonDTO> call, @NotNull Response<PokemonDTO> response) {
+                observer.onSuccess(Mapper.convertFrom(response.body()));
+            }
 
-                Pokemon pokemon = new Pokemon.Builder()
+            @Override
+            public void onFailure(@NotNull Call<PokemonDTO> call, @NotNull Throwable t) {
+                observer.onError(new Error(t.getMessage()));
+            }
+        });
+
+        return this.observer;
+    }
+
+    static class Mapper {
+        static Pokemon convertFrom(@Nullable PokemonDTO dto) {
+            Pokemon aPokemon = null;
+            if (dto != null) {
+                aPokemon = new Pokemon.Builder()
                         .setId(dto.getId())
                         .setHeight(dto.getHeight())
                         .setName(dto.getName())
@@ -40,26 +55,8 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
                         .setType(dto.getTypes().get(0).getType().getName())
                         .setPicture(dto.getSprites().getFront())
                         .build();
-
-                observer.onSuccess(pokemon);
             }
-
-            @Override
-            public void onFailure(Call<PokemonResponseDTO> call, Throwable t) {
-                observer.onError(new Error(t.getMessage()));
-            }
-        });
-
-        return observer;
-    }
-
-    @Override
-    public AsyncResult<Pokemon, Error> getAll() {
-        throw new RuntimeException(IMPLEMENTATION_ABSENT_ERROR);
-    }
-
-    @Override
-    public Boolean save(Pokemon toBeSaved) {
-        throw new RuntimeException(IMPLEMENTATION_ABSENT_ERROR);
+            return aPokemon;
+        }
     }
 }

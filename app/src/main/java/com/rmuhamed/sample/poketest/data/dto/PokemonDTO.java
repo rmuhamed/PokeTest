@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PokemonResponseDTO {
+public class PokemonDTO {
     @SerializedName("id")
     private String id;
     @SerializedName("name")

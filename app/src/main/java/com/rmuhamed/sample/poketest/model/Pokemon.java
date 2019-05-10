@@ -2,7 +2,7 @@ package com.rmuhamed.sample.poketest.model;
 
 import java.util.Date;
 
-public class Pokemon {
+public final class Pokemon {
     private String id;
     private String type;
     private String name;

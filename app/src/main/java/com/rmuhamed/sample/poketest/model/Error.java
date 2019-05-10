@@ -1,6 +1,6 @@
 package com.rmuhamed.sample.poketest.model;
 
-public class Error {
+public final class Error {
     private String message;
 
     public Error(String message) {this.message = message;}

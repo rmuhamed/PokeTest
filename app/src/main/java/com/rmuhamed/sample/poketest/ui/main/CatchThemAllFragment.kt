@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
-import com.rmuhamed.sample.poketest.data.RepositoryFactory
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
+import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
@@ -28,8 +28,12 @@ class CatchThemAllFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, CustomViewModelProvider(RepositoryFactory.create(RepositoryFactory.Type.NETWORK)))
-                .get(CatchThemAllViewModel::class.java)
+
+        val application = activity!!.application as PokeTestApplication
+
+        viewModel = ViewModelProviders
+            .of(this, CustomViewModelProvider(application.networkRepository, application.persistenceRepository))
+            .get(CatchThemAllViewModel::class.java)
 
         viewModel.observable.observe(this, Observer {
             poke_info_container.visibility = View.VISIBLE
