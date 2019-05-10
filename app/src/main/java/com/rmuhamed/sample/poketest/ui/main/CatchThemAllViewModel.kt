@@ -10,32 +10,35 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 class CatchThemAllViewModel(
     private val networkRepository: IRepository<Pokemon, Error>,
     private val persistenceRepository: IRepository<Pokemon, Error>
-)
-    : ViewModel(), AsyncResult<Pokemon, Error> {
-    val observable = MutableLiveData<Pokemon>()
+) : ViewModel(), AsyncResult<Pokemon, Error> {
+    private var id: Int
+
+    val errorObservable = MutableLiveData<Error>()
+    val pokemonInfoObservable = MutableLiveData<Pokemon>()
+    val catchItButtonObservable = MutableLiveData<Boolean>()
 
     init {
+        id = (1..150).shuffled().first()
+
         bindToDataSource()
-        fetch((1..150).shuffled().first())
+        getPokemonInfoFrom(id)
     }
 
     private fun bindToDataSource() {
         networkRepository.addObserver(this)
     }
 
-    private fun fetch(id: Int) {
+    private fun getPokemonInfoFrom(id: Int) {
         networkRepository.findBy(id)
     }
 
-    fun haveItInBackpack(id: String) {
-        persistenceRepository.exists(id)
-    }
-
     override fun onSuccess(result: Pokemon?) {
-        observable.postValue(result)
+        pokemonInfoObservable.postValue(result)
+        catchItButtonObservable.postValue(persistenceRepository.exists(id.toString()))
     }
 
     override fun onError(error: Error?) {
-        //TODO: RM - Make a wrapper UI object instead of entity (both success and error)
+        errorObservable.postValue(error)
+        catchItButtonObservable.postValue(false)
     }
 }
