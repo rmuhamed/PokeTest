@@ -12,7 +12,7 @@ public interface PokemonDAO {
     List<PokemonEntity> findAll();
 
     @Query("SELECT COUNT(*) FROM PokemonEntity WHERE id = :id")
-    int countBy(String id);
+    Integer countBy(String id);
 
     @Insert
     void save(PokemonEntity aPokemonEntity);

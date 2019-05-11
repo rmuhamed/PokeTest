@@ -6,39 +6,62 @@ import com.rmuhamed.sample.poketest.data.AsyncResult
 import com.rmuhamed.sample.poketest.data.IRepository
 import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
+import java.util.*
 
 class CatchThemAllViewModel(
     private val networkRepository: IRepository<Pokemon, Error>,
     private val persistenceRepository: IRepository<Pokemon, Error>
-) : ViewModel(), AsyncResult<Pokemon, Error> {
-    private var id: Int
+) : ViewModel() {
 
     val errorObservable = MutableLiveData<Error>()
     val pokemonInfoObservable = MutableLiveData<Pokemon>()
     val catchItButtonObservable = MutableLiveData<Boolean>()
+    val caughtPokemonObservable = MutableLiveData<Boolean>()
 
     init {
-        id = (1..150).shuffled().first()
-
         bindToDataSource()
-        getPokemonInfoFrom(id)
+        getPokemonInfoFrom((1..150).shuffled().first())
     }
 
     private fun bindToDataSource() {
-        networkRepository.addObserver(this)
+        networkRepository.addObserver(object : AsyncResult<Pokemon, Error> {
+            override fun onError(error: Error?) {
+                catchItButtonObservable.postValue(false)
+                errorObservable.postValue(error)
+            }
+
+            override fun onPresent(present: Boolean?) {}
+
+            override fun onSuccess(result: Pokemon?) {
+                pokemonInfoObservable.postValue(result)
+                persistenceRepository.exists(result?.id.toString())
+            }
+        })
+        persistenceRepository.addObserver(object : AsyncResult<Pokemon, Error> {
+            override fun onError(error: Error) {
+                errorObservable.postValue(error)
+            }
+
+            override fun onPresent(present: Boolean) {
+                catchItButtonObservable.postValue(!present)
+            }
+
+            override fun onSuccess(result: Pokemon?) {
+                caughtPokemonObservable.postValue(true)
+            }
+        })
+    }
+
+    fun catchPokemon(pokemon: Pokemon) {
+        pokemon.capturedAt = Date()
+        persistenceRepository.save(pokemon)
     }
 
     private fun getPokemonInfoFrom(id: Int) {
         networkRepository.findBy(id)
     }
 
-    override fun onSuccess(result: Pokemon?) {
-        pokemonInfoObservable.postValue(result)
-        //catchItButtonObservable.postValue(persistenceRepository.exists(id.toString()))
-    }
-
-    override fun onError(error: Error?) {
-        errorObservable.postValue(error)
-        catchItButtonObservable.postValue(false)
+    fun searchForAnotherPokemon() {
+        getPokemonInfoFrom((1..150).shuffled().first())
     }
 }

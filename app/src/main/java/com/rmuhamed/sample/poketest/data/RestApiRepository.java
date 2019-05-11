@@ -26,7 +26,7 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
     }
 
     @Override
-    public AsyncResult<Pokemon, Error> findBy(Integer id) {
+    public void findBy(Integer id) {
         this.apiDefinition.fetchBy(id).enqueue(new Callback<PokemonDTO>() {
             @Override
             public void onResponse(@NotNull Call<PokemonDTO> call, @NotNull Response<PokemonDTO> response) {
@@ -38,8 +38,6 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
                 observer.onError(new Error(t.getMessage()));
             }
         });
-
-        return this.observer;
     }
 
     static class Mapper {
