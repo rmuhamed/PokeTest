@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PokeTest</string>
-    <string name="backpack">Backpack</string>
-    <string name="search_and_catch">Search all over the world</string>
+    <string name="backpack">My backpack</string>
+    <string name="search_and_catch">Catch them All!</string>
 
     <string name="image_description">Pokemon image</string>
 
