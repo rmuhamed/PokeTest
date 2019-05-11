@@ -56,6 +56,10 @@ public final class Pokemon {
         return capturedAt;
     }
 
+    public void setCapturedAt(Date capturedAt) {
+        this.capturedAt = capturedAt;
+    }
+
     public static class Builder {
         private String name;
         private String id;

@@ -2,21 +2,18 @@ package com.rmuhamed.sample.poketest.data;
 
 public interface IRepository<T, E> {
 
-    default AsyncResult<T, E> findBy(Integer id) {
-        return null;
+    default void findBy(Integer id) {
     }
 
-    default AsyncResult<T, E> getAll() {
-        return null;
+    default void getAll() {
     }
 
-    default Boolean save(T toBeSaved) {
-        return false;
+    default void save(T toBeSaved) {
     }
 
-    void addObserver(AsyncResult<T, E> observer);
+    default void addObserver(AsyncResult<T, E> observer) {
+    }
 
-    default Boolean exists(String id) {
-        return false;
+    default void exists(String id) {
     }
 }

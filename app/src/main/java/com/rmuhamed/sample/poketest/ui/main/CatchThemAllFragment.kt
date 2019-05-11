@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
+import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.squareup.picasso.Picasso
@@ -26,6 +27,13 @@ class CatchThemAllFragment : Fragment() {
         return inflater.inflate(R.layout.catch_them_all_fragment, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        skip_it_button.setOnClickListener { viewModel.searchForAnotherPokemon() }
+        catch_it_button.setOnClickListener { buttonView -> viewModel.catchPokemon(buttonView.tag as Pokemon) }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -35,19 +43,25 @@ class CatchThemAllFragment : Fragment() {
             .of(this, CustomViewModelProvider(application.networkRepository, application.persistenceRepository))
             .get(CatchThemAllViewModel::class.java)
 
-        viewModel.observable.observe(this, Observer {
+        viewModel.pokemonInfoObservable.observe(this, Observer {
             poke_info_container.visibility = View.VISIBLE
             loading.visibility = View.INVISIBLE
 
             Picasso.get().load(it.picture)
                     .placeholder(R.drawable.ic_pokedex_placeholder)
-                    .into(pokemon_picture)
+                .into(pokemon_picture_image)
 
-            pokemon_name.text = it.name
-            pokemon_height.text = getString(R.string.height_placeholder, it.height)
-            pokemon_weight.text = getString(R.string.weight_placeholder, it.weight)
-            pokemon_type.text = getString(R.string.type_placeholder, it.type)
-            pokemon_base_experience.text = getString(R.string.base_experience_placeholder, it.baseExperience)
+            pokemon_name_label.text = it.name
+            pokemon_height_label.text = getString(R.string.height_placeholder, it.height)
+            pokemon_weight_label.text = getString(R.string.weight_placeholder, it.weight)
+            pokemon_type_label.text = getString(R.string.type_placeholder, it.type)
+            pokemon_base_experience_label.text = getString(R.string.base_experience_placeholder, it.baseExperience)
+
+            catch_it_button.tag = it
+        })
+
+        viewModel.catchItButtonObservable.observe(this, Observer {
+            catch_it_button.visibility = if (it) View.VISIBLE else View.GONE
         })
     }
 
