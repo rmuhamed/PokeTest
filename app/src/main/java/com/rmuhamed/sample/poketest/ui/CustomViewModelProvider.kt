@@ -6,6 +6,7 @@ import com.rmuhamed.sample.poketest.data.IRepository
 import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.main.CatchThemAllViewModel
+import com.rmuhamed.sample.poketest.ui.main.MyBackpackViewModel
 
 class CustomViewModelProvider(
     private val networkRepository: IRepository<Pokemon, Error>,
@@ -13,6 +14,13 @@ class CustomViewModelProvider(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CatchThemAllViewModel(networkRepository, persistenceRepository) as T
+        val viewModel: ViewModel
+        if (modelClass == CatchThemAllViewModel::class.java) {
+            viewModel = CatchThemAllViewModel(networkRepository, persistenceRepository)
+        } else {
+            viewModel = MyBackpackViewModel(persistenceRepository)
+        }
+
+        return viewModel as T
     }
 }

@@ -5,6 +5,7 @@
     <dimen name="margin_big">24dp</dimen>
     <dimen name="margin_bigger">36dp</dimen>
     <dimen name="picture_size_detail">128dp</dimen>
+    <dimen name="picture_size_item">96dp</dimen>
     <dimen name="label_size_title">24sp</dimen>
     <dimen name="label_size_normal">16sp</dimen>
     <dimen name="progress">48dp</dimen>

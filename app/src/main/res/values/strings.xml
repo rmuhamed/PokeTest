@@ -5,10 +5,7 @@
 
     <string name="image_description">Pokemon image</string>
 
-    <string name="pokemon_name">PokeName</string>
-    <string name="pokemon_weight">50lib</string>
-    <string name="pokemon_height">30m</string>
-    <string name="pokemon_catched_time">30-06-2019</string>
+    <string name="captured_at_placeholder">Captured at %s</string>
     <string name="height_placeholder">Height %s</string>
     <string name="weight_placeholder">Weight %s</string>
     <string name="name_placeholder">Name</string>

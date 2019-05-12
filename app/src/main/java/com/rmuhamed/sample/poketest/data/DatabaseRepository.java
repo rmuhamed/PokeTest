@@ -1,11 +1,13 @@
 package com.rmuhamed.sample.poketest.data;
 
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
 import com.rmuhamed.sample.poketest.data.dao.PokemonDAO;
 import com.rmuhamed.sample.poketest.data.dao.PokemonEntity;
+import com.rmuhamed.sample.poketest.data.mappers.Mappers;
 import com.rmuhamed.sample.poketest.model.Error;
 import com.rmuhamed.sample.poketest.model.Pokemon;
+
+import java.util.List;
 
 //TODO: RM - Think about moving ioThread background stuff to WorkManager here
 public class DatabaseRepository implements IRepository<Pokemon, Error> {
@@ -18,11 +20,26 @@ public class DatabaseRepository implements IRepository<Pokemon, Error> {
     }
 
     @Override
+    public void getAll() {
+        new AsyncTask<Void, Void, List<Pokemon>>() {
+            @Override
+            protected List<Pokemon> doInBackground(Void... args) {
+                return Mappers.toBusinessObject(dao.findAll());
+            }
+
+            @Override
+            protected void onPostExecute(List<Pokemon> pokemons) {
+                observer.onSuccess(pokemons);
+            }
+        }.execute();
+    }
+
+    @Override
     public void save(Pokemon toBeSaved) {
         new AsyncTask<Pokemon, Void, Pokemon>() {
             @Override
             protected Pokemon doInBackground(Pokemon... pokemons) {
-                PokemonEntity entity = Mapper.convertFrom(pokemons[0]);
+                PokemonEntity entity = Mappers.toDBEntity(pokemons[0]);
                 dao.save(entity);
                 return pokemons[0];
             }
@@ -54,18 +71,5 @@ public class DatabaseRepository implements IRepository<Pokemon, Error> {
         this.observer = observer;
     }
 
-    static class Mapper {
-        static PokemonEntity convertFrom(@NonNull Pokemon aPokemon) {
-            PokemonEntity entity = new PokemonEntity();
-            entity.setId(aPokemon.getId());
-            entity.setName(aPokemon.getName());
-            entity.setBaseExperience(aPokemon.getBaseExperience());
-            entity.setHeight(aPokemon.getHeight());
-            entity.setWeight(aPokemon.getWeight());
-            entity.setPicture(aPokemon.getPicture());
-            entity.setCapturedAt(aPokemon.getCapturedAt().getTime());
 
-            return entity;
-        }
-    }
 }
