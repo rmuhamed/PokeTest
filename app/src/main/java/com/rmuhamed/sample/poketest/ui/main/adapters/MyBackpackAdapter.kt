@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_pokemon.view.*
+import java.text.SimpleDateFormat
 
 class MyBackpackAdapter(val pokemons: List<Pokemon>?) :
     RecyclerView.Adapter<MyBackpackAdapter.MyBackpackItemViewHolder>() {
@@ -30,7 +32,13 @@ class MyBackpackAdapter(val pokemons: List<Pokemon>?) :
             holder.itemView.pokemon_name_label.text = pokemonAt.name
             holder.itemView.pokemon_height_label.text = pokemonAt.height
             holder.itemView.pokemon_weight_label.text = pokemonAt.weight
-            holder.itemView.pokemon_capturedat_label.text = pokemonAt.capturedAt.toString()
+            holder.itemView.pokemon_capturedat_label.text = SimpleDateFormat("dd-MM-yy hh:mm")
+                .format(pokemonAt.capturedAt)
+
+            Picasso.get().load(pokemonAt.picture)
+                .placeholder(R.drawable.ic_pikachu_back)
+                .into(holder.itemView.pokemon_picture_image)
+
         }
     }
 
