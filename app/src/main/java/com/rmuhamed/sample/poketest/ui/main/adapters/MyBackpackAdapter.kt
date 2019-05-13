@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_pokemon.view.*
 import java.text.SimpleDateFormat
 
-class MyBackpackAdapter(val pokemons: List<Pokemon>?) :
+class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemViewHandler: MyBackpackItemViewHandler) :
     RecyclerView.Adapter<MyBackpackAdapter.MyBackpackItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyBackpackItemViewHolder {
@@ -27,20 +27,26 @@ class MyBackpackAdapter(val pokemons: List<Pokemon>?) :
         pokemons?.let {
             val pokemonAt = pokemons[position]
 
-            holder.itemView.pokemon_type_label.text = pokemonAt.type
-            holder.itemView.pokemon_base_experience_label.text = pokemonAt.baseExperience
-            holder.itemView.pokemon_name_label.text = pokemonAt.name
-            holder.itemView.pokemon_height_label.text = pokemonAt.height
-            holder.itemView.pokemon_weight_label.text = pokemonAt.weight
-            holder.itemView.pokemon_capturedat_label.text = SimpleDateFormat("dd-MM-yy hh:mm")
-                .format(pokemonAt.capturedAt)
-
+            holder.paintWith(pokemonAt)
+            //TODO: RM - WRAP Into customView, to not expose Library usage
             Picasso.get().load(pokemonAt.picture)
                 .placeholder(R.drawable.ic_pikachu_back)
                 .into(holder.itemView.pokemon_picture_image)
 
+            holder.itemView.setOnClickListener { itemViewHandler.onPokemonSelected(pokemonAt) }
         }
     }
 
-    class MyBackpackItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class MyBackpackItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        fun paintWith(pokemon: Pokemon) {
+            view.pokemon_name_label.text = pokemon.name
+            view.pokemon_type_label.text = view.context.getString(R.string.type_placeholder, pokemon.type)
+            view.pokemon_base_experience_label.text =
+                view.context.getString(R.string.base_experience_placeholder, pokemon.baseExperience)
+            view.pokemon_height_label.text = view.context.getString(R.string.height_placeholder, pokemon.height)
+            view.pokemon_weight_label.text = view.context.getString(R.string.weight_placeholder, pokemon.weight)
+            view.pokemon_capturedat_label.text = SimpleDateFormat("dd-MM-yy hh:mm")
+                .format(pokemon.capturedAt)
+        }
+    }
 }

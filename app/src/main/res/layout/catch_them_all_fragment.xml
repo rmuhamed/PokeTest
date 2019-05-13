@@ -105,6 +105,8 @@
             android:elevation="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_big"
             android:layout_marginStart="@dimen/margin_big"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:background="@drawable/skip_it_button_drawable"
             android:src="@drawable/ic_skip_this_round"
             app:layout_constraintRight_toLeftOf="@id/catch_it_button"
@@ -119,7 +121,6 @@
             android:layout_marginTop="@dimen/margin_normal"
             tools:visibility="visible"
             android:visibility="gone"
-
             android:layout_marginEnd="@dimen/margin_big"
             android:elevation="@dimen/margin_small"
             android:background="@drawable/catch_it_button_drawable"
