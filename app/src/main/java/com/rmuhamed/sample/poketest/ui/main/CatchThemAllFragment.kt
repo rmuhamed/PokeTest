@@ -53,7 +53,7 @@ class CatchThemAllFragment : Fragment() {
             Picasso.get().load(it.picture)
                 .placeholder(R.drawable.ic_pokedex_placeholder)
                 .into(pokemon_picture_image)
-
+            //TODO: RM - Also think about a PokemonView to put this away
             pokemon_name_label.text = it.name
             pokemon_height_label.text = getString(R.string.height_placeholder, it.height)
             pokemon_weight_label.text = getString(R.string.weight_placeholder, it.weight)
@@ -65,6 +65,11 @@ class CatchThemAllFragment : Fragment() {
 
         viewModel.catchItButtonObservable.observe(this, Observer {
             catch_it_button.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
+        viewModel.caughtPokemonObservable.observe(this, Observer {
+            catch_it_button.visibility = View.GONE
+            viewModel.searchForAnotherPokemon()
         })
     }
 
