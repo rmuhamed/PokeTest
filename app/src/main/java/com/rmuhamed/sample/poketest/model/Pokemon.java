@@ -21,7 +21,6 @@ public final class Pokemon {
         this.weight = builder.weight;
         this.height = builder.height;
         this.baseExperience = builder.baseExperience;
-        this.capturedAt = builder.capturedAt;
     }
 
     public String getName() {
@@ -68,7 +67,6 @@ public final class Pokemon {
         private String weight;
         private String height;
         private String baseExperience;
-        private Date capturedAt;
 
         public Builder setName(String name) {
             this.name = name;
@@ -108,12 +106,6 @@ public final class Pokemon {
 
         public Builder setBaseExperience(String baseExperience) {
             this.baseExperience = baseExperience;
-
-            return this;
-        }
-
-        public Builder capturedAt(Date capturedAt) {
-            this.capturedAt = capturedAt;
 
             return this;
         }

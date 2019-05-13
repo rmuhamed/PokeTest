@@ -30,8 +30,6 @@ class CatchThemAllViewModel(
                 errorObservable.postValue(error)
             }
 
-            override fun onPresent(present: Boolean?) {}
-
             override fun onSuccess(result: Pokemon?) {
                 pokemonInfoObservable.postValue(result)
                 persistenceRepository.exists(result?.id.toString())

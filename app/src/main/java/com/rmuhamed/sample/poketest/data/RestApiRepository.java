@@ -1,8 +1,8 @@
 package com.rmuhamed.sample.poketest.data;
 
-import androidx.annotation.Nullable;
 import com.rmuhamed.sample.poketest.config.RestApiDefinition;
 import com.rmuhamed.sample.poketest.data.dto.PokemonDTO;
+import com.rmuhamed.sample.poketest.data.mappers.Mappers;
 import com.rmuhamed.sample.poketest.model.Error;
 import com.rmuhamed.sample.poketest.model.Pokemon;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,7 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
         this.apiDefinition.fetchBy(id).enqueue(new Callback<PokemonDTO>() {
             @Override
             public void onResponse(@NotNull Call<PokemonDTO> call, @NotNull Response<PokemonDTO> response) {
-                observer.onSuccess(Mapper.convertFrom(response.body()));
+                observer.onSuccess(Mappers.toBusinessObject(response.body()));
             }
 
             @Override
@@ -38,23 +38,5 @@ public class RestApiRepository implements IRepository<Pokemon, Error> {
                 observer.onError(new Error(t.getMessage()));
             }
         });
-    }
-
-    static class Mapper {
-        static Pokemon convertFrom(@Nullable PokemonDTO dto) {
-            Pokemon aPokemon = null;
-            if (dto != null) {
-                aPokemon = new Pokemon.Builder()
-                        .setId(dto.getId())
-                        .setHeight(dto.getHeight())
-                        .setName(dto.getName())
-                        .setWeight(dto.getWeight())
-                        .setBaseExperience(dto.getBaseExperience())
-                        .setType(dto.getTypes().get(0).getType().getName())
-                        .setPicture(dto.getSprites().getFront())
-                        .build();
-            }
-            return aPokemon;
-        }
     }
 }

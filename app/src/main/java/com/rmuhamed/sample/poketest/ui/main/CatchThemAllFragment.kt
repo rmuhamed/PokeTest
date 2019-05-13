@@ -44,11 +44,14 @@ class CatchThemAllFragment : Fragment() {
             .get(CatchThemAllViewModel::class.java)
 
         viewModel.pokemonInfoObservable.observe(this, Observer {
-            poke_info_container.visibility = View.VISIBLE
             loading.visibility = View.INVISIBLE
 
+            poke_info_container.visibility = View.VISIBLE
+            skip_it_button.visibility = View.VISIBLE
+
+            //TODO: RM - WRAP Into customView, to not expose Library usage
             Picasso.get().load(it.picture)
-                    .placeholder(R.drawable.ic_pokedex_placeholder)
+                .placeholder(R.drawable.ic_pokedex_placeholder)
                 .into(pokemon_picture_image)
 
             pokemon_name_label.text = it.name
