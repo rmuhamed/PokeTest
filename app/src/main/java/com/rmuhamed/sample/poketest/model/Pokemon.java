@@ -1,8 +1,11 @@
 package com.rmuhamed.sample.poketest.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public final class Pokemon {
+public final class Pokemon implements Parcelable {
     private String id;
     private String type;
     private String name;
@@ -22,6 +25,28 @@ public final class Pokemon {
         this.height = builder.height;
         this.baseExperience = builder.baseExperience;
     }
+
+    protected Pokemon(Parcel in) {
+        id = in.readString();
+        type = in.readString();
+        name = in.readString();
+        picture = in.readString();
+        weight = in.readString();
+        height = in.readString();
+        baseExperience = in.readString();
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -57,6 +82,22 @@ public final class Pokemon {
 
     public void setCapturedAt(Date capturedAt) {
         this.capturedAt = capturedAt;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
+        dest.writeString(name);
+        dest.writeString(picture);
+        dest.writeString(weight);
+        dest.writeString(height);
+        dest.writeString(baseExperience);
     }
 
     public static class Builder {

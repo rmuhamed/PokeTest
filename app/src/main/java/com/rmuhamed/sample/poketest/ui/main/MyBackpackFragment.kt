@@ -1,7 +1,7 @@
 package com.rmuhamed.sample.poketest.ui.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
+import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackItemViewHandler
 import kotlinx.android.synthetic.main.my_backpack_fragment.*
@@ -43,12 +44,19 @@ class MyBackpackFragment : Fragment() {
             my_pokemons.visibility = View.VISIBLE
             my_pokemons.adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
                 override fun onPokemonSelected(pokemon: Pokemon) {
-                    Log.d("MyBackpack", "Selected element handling")
+                    showDetailsOf(pokemon)
                 }
             })
             my_pokemons.setHasFixedSize(true)
         })
 
+    }
+
+    private fun showDetailsOf(pokemon: Pokemon) {
+        this.startActivity(Intent().apply {
+            setClass(this@MyBackpackFragment.context, PokeDetailActivity::class.java)
+            putExtra("pokemon", pokemon)
+        })
     }
 
 }
