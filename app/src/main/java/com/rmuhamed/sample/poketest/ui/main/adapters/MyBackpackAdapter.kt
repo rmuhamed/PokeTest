@@ -33,7 +33,12 @@ class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemVi
                 .placeholder(R.drawable.ic_pikachu_back)
                 .into(holder.itemView.pokemon_picture_image)
 
-            holder.itemView.setOnClickListener { itemViewHandler.onPokemonSelected(pokemonAt) }
+            holder.itemView.setOnClickListener {
+                itemViewHandler.onPokemonSelected(
+                    pokemonAt,
+                    holder.itemView.pokemon_picture_image
+                )
+            }
         }
     }
 

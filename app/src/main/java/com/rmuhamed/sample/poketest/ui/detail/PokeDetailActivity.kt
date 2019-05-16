@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
-import kotlinx.android.synthetic.main.item_pokemon.*
+import kotlinx.android.synthetic.main.activity_poke_detail.*
 
 class PokeDetailActivity : AppCompatActivity() {
 
@@ -17,10 +17,10 @@ class PokeDetailActivity : AppCompatActivity() {
 
         val pokemon = intent.getParcelableExtra<Pokemon>("pokemon")
 
-        viewModel = ViewModelProviders.of(this).get(PokeDetailViewModel::class.java)
+        setSupportActionBar(toolbar)
 
-        pokemon_height_label.text = pokemon.height
-        pokemon_weight_label.text = pokemon.weight
-        pokemon_base_experience_label.text = pokemon.baseExperience
+        collapsing_toolbar?.title = pokemon.name
+
+        viewModel = ViewModelProviders.of(this).get(PokeDetailViewModel::class.java)
     }
 }
