@@ -3,9 +3,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools">
-
+        android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/expanded_toolbar"
                 tools:title="@string/app_name"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleGravity="center"
@@ -27,4 +27,79 @@
                     app:layout_collapseMode="pin"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layout_margin="@dimen/margin_normal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/pokemon_picture_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    tools:src="@drawable/ic_gotcha"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pokemon_type_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/label_size_title"
+                    android:textStyle="bold"
+                    tools:text="@string/type_placeholder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pokemon_base_experience_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/label_size_title"
+                    android:textStyle="bold"
+                    tools:text="@string/base_experience_placeholder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pokemon_weight_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/label_size_title"
+                    android:textStyle="bold"
+                    tools:text="@string/weight_placeholder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pokemon_height_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/label_size_title"
+                    android:textStyle="bold"
+                    tools:text="@string/height_placeholder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pokemon_capturedat_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/label_size_title"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/margin_small"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_height_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="@string/captured_at_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

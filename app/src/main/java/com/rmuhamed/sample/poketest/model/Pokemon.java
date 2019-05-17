@@ -3,9 +3,12 @@ package com.rmuhamed.sample.poketest.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public final class Pokemon implements Parcelable {
+    private static final String FORMAT = "dd-MM-yy hh:mm";
     private String id;
     private String type;
     private String name;
@@ -13,6 +16,7 @@ public final class Pokemon implements Parcelable {
     private String weight;
     private String height;
     private String baseExperience;
+    private String capturedAtStr;
 
     private Date capturedAt;
 
@@ -34,6 +38,7 @@ public final class Pokemon implements Parcelable {
         weight = in.readString();
         height = in.readString();
         baseExperience = in.readString();
+        capturedAtStr = in.readString();
     }
 
     public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
@@ -82,6 +87,11 @@ public final class Pokemon implements Parcelable {
 
     public void setCapturedAt(Date capturedAt) {
         this.capturedAt = capturedAt;
+        this.capturedAtStr = new SimpleDateFormat(FORMAT, Locale.getDefault()).format(capturedAt);
+    }
+
+    public String getCapturedAtStr() {
+        return capturedAtStr;
     }
 
     @Override
@@ -98,6 +108,7 @@ public final class Pokemon implements Parcelable {
         dest.writeString(weight);
         dest.writeString(height);
         dest.writeString(baseExperience);
+        dest.writeString(capturedAtStr);
     }
 
     public static class Builder {
