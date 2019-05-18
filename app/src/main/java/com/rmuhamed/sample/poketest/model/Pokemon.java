@@ -1,8 +1,14 @@
 package com.rmuhamed.sample.poketest.model;
 
-import java.util.Date;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public final class Pokemon {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public final class Pokemon implements Parcelable {
+    private static final String FORMAT = "dd-MM-yy hh:mm";
     private String id;
     private String type;
     private String name;
@@ -10,6 +16,7 @@ public final class Pokemon {
     private String weight;
     private String height;
     private String baseExperience;
+    private String capturedAtStr;
 
     private Date capturedAt;
 
@@ -22,6 +29,29 @@ public final class Pokemon {
         this.height = builder.height;
         this.baseExperience = builder.baseExperience;
     }
+
+    protected Pokemon(Parcel in) {
+        id = in.readString();
+        type = in.readString();
+        name = in.readString();
+        picture = in.readString();
+        weight = in.readString();
+        height = in.readString();
+        baseExperience = in.readString();
+        capturedAtStr = in.readString();
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -57,6 +87,28 @@ public final class Pokemon {
 
     public void setCapturedAt(Date capturedAt) {
         this.capturedAt = capturedAt;
+        this.capturedAtStr = new SimpleDateFormat(FORMAT, Locale.getDefault()).format(capturedAt);
+    }
+
+    public String getCapturedAtStr() {
+        return capturedAtStr;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
+        dest.writeString(name);
+        dest.writeString(picture);
+        dest.writeString(weight);
+        dest.writeString(height);
+        dest.writeString(baseExperience);
+        dest.writeString(capturedAtStr);
     }
 
     public static class Builder {

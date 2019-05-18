@@ -30,7 +30,7 @@ object Mappers {
             .setWeight(from.weight)
             .setPicture(from.picture)
             .build()
-        pokemon.capturedAt = Date(from.getCapturedAt())
+        pokemon.capturedAt = Date(from.capturedAt)
 
         return pokemon
     }

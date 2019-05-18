@@ -1,10 +1,11 @@
 package com.rmuhamed.sample.poketest.ui.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,9 +13,11 @@ import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
+import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackItemViewHandler
 import kotlinx.android.synthetic.main.my_backpack_fragment.*
+
 
 class MyBackpackFragment : Fragment() {
 
@@ -42,13 +45,27 @@ class MyBackpackFragment : Fragment() {
             progress.visibility = View.GONE
             my_pokemons.visibility = View.VISIBLE
             my_pokemons.adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
-                override fun onPokemonSelected(pokemon: Pokemon) {
-                    Log.d("MyBackpack", "Selected element handling")
+                override fun onPokemonSelected(pokemon: Pokemon, pokemonImage: AppCompatImageView) {
+                    showDetailsOf(pokemon, pokemonImage)
                 }
             })
             my_pokemons.setHasFixedSize(true)
         })
 
+    }
+
+    private fun showDetailsOf(
+        pokemon: Pokemon,
+        pokemonImage: AppCompatImageView
+    ) {
+
+        //val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")
+
+
+        this.startActivity(Intent().apply {
+            setClass(this@MyBackpackFragment.context, PokeDetailActivity::class.java)
+            putExtra("pokemon", pokemon)
+        })
     }
 
 }

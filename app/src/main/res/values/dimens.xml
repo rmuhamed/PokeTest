@@ -10,4 +10,6 @@
     <dimen name="label_size_normal">16sp</dimen>
     <dimen name="progress">48dp</dimen>
     <dimen name="button_height">56dp</dimen>
+    <dimen name="tall_toolbar_height">64dp</dimen>
+    <dimen name="expanded_toolbar">120dp</dimen>
 </resources>

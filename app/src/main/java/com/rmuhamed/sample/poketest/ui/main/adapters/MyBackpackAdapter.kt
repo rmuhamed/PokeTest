@@ -8,7 +8,6 @@ import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_pokemon.view.*
-import java.text.SimpleDateFormat
 
 class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemViewHandler: MyBackpackItemViewHandler) :
     RecyclerView.Adapter<MyBackpackAdapter.MyBackpackItemViewHolder>() {
@@ -33,7 +32,12 @@ class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemVi
                 .placeholder(R.drawable.ic_pikachu_back)
                 .into(holder.itemView.pokemon_picture_image)
 
-            holder.itemView.setOnClickListener { itemViewHandler.onPokemonSelected(pokemonAt) }
+            holder.itemView.setOnClickListener {
+                itemViewHandler.onPokemonSelected(
+                    pokemonAt,
+                    holder.itemView.pokemon_picture_image
+                )
+            }
         }
     }
 
@@ -45,8 +49,8 @@ class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemVi
                 view.context.getString(R.string.base_experience_placeholder, pokemon.baseExperience)
             view.pokemon_height_label.text = view.context.getString(R.string.height_placeholder, pokemon.height)
             view.pokemon_weight_label.text = view.context.getString(R.string.weight_placeholder, pokemon.weight)
-            view.pokemon_capturedat_label.text = SimpleDateFormat("dd-MM-yy hh:mm")
-                .format(pokemon.capturedAt)
+            view.pokemon_capturedat_label.text =
+                view.context.getString(R.string.captured_at_placeholder, pokemon.capturedAtStr)
         }
     }
 }
