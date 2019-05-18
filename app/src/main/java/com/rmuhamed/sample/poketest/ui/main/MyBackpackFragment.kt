@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
+import com.rmuhamed.sample.poketest.ui.BUNDLE_CONSTANTS.POKEMON
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
@@ -44,12 +45,15 @@ class MyBackpackFragment : Fragment() {
         viewModel.myPokemonsObservable.observe(this, Observer {
             progress.visibility = View.GONE
             my_pokemons.visibility = View.VISIBLE
-            my_pokemons.adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
-                override fun onPokemonSelected(pokemon: Pokemon, pokemonImage: AppCompatImageView) {
-                    showDetailsOf(pokemon, pokemonImage)
-                }
-            })
-            my_pokemons.setHasFixedSize(true)
+
+            my_pokemons.apply {
+                adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
+                    override fun onPokemonSelected(pokemon: Pokemon, pokemonImage: AppCompatImageView) {
+                        showDetailsOf(pokemon, pokemonImage)
+                    }
+                })
+                setHasFixedSize(true)
+            }
         })
 
     }
@@ -61,10 +65,9 @@ class MyBackpackFragment : Fragment() {
 
         //val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")
 
-
         this.startActivity(Intent().apply {
             setClass(this@MyBackpackFragment.context, PokeDetailActivity::class.java)
-            putExtra("pokemon", pokemon)
+            putExtra(POKEMON, pokemon)
         })
     }
 

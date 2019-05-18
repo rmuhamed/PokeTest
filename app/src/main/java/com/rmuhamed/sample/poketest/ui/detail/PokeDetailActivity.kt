@@ -2,25 +2,28 @@ package com.rmuhamed.sample.poketest.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
+import com.rmuhamed.sample.poketest.ui.BUNDLE_CONSTANTS.POKEMON
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_poke_detail.*
 
 class PokeDetailActivity : AppCompatActivity() {
-
     private lateinit var viewModel: PokeDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_poke_detail)
 
-        val pokemon = intent.getParcelableExtra<Pokemon>("pokemon")
+        val pokemon = intent.getParcelableExtra<Pokemon>(POKEMON)
 
         setSupportActionBar(toolbar)
 
-        collapsing_toolbar?.title = pokemon?.name ?: "NULL NAME"
+        collapsing_toolbar.title = pokemon?.name ?: "NULL NAME"
+        collapsing_toolbar.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.white))
+        collapsing_toolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white))
 
         paint(pokemon)
 
