@@ -32,18 +32,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:layout_margin="@dimen/margin_normal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/margin_normal"
+                android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/pokemon_picture_image"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    tools:src="@drawable/ic_gotcha"/>
+                    tools:src="@drawable/ic_sleeping"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/pokemon_type_label"
@@ -51,8 +54,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/label_size_title"
+                    android:textSize="@dimen/label_size_detail"
                     android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_picture_image"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:text="@string/type_placeholder"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -61,8 +66,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/label_size_title"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/label_size_detail"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_type_label"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:text="@string/base_experience_placeholder"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -71,8 +77,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/label_size_title"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/label_size_detail"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_base_experience_label"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:text="@string/weight_placeholder"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -81,8 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/label_size_title"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/label_size_detail"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_weight_label"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:text="@string/height_placeholder"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -91,15 +99,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/label_size_title"
                     android:textStyle="bold"
-                    android:layout_marginStart="@dimen/margin_small"
+                    android:textSize="@dimen/label_size_detail"
+                    android:layout_margin="@dimen/margin_small"
                     app:layout_constraintTop_toBottomOf="@id/pokemon_height_label"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="@string/captured_at_placeholder"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-
-        </LinearLayout>
+                    tools:text="@string/captured_at_placeholder"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
