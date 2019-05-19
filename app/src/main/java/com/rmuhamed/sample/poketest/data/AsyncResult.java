@@ -15,6 +15,4 @@ public interface AsyncResult<T, E> {
 
     default void onPresent(Boolean present) {
     }
-
-    ;
 }

@@ -11,11 +11,12 @@ object Mappers {
         val entity = PokemonEntity()
         entity.id = from.id
         entity.name = from.name
+        entity.type = from.type
         entity.baseExperience = from.baseExperience
         entity.height = from.height
         entity.weight = from.weight
         entity.picture = from.picture
-        entity.capturedAt = from.capturedAt.getTime()
+        entity.capturedAt = from.capturedAt.time
 
         return entity
     }
@@ -24,6 +25,7 @@ object Mappers {
     fun toBusinessObject(from: PokemonEntity): Pokemon {
         val pokemon = Pokemon.Builder()
             .setId(from.id)
+            .setType(from.type)
             .setName(from.name)
             .setBaseExperience(from.baseExperience)
             .setHeight(from.height)
