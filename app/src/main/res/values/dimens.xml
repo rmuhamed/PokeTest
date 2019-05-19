@@ -19,4 +19,5 @@
 
     <dimen name="tall_toolbar_height">64dp</dimen>
     <dimen name="expanded_toolbar">120dp</dimen>
+    <dimen name="image_logo_toolbar">48dp</dimen>
 </resources>
