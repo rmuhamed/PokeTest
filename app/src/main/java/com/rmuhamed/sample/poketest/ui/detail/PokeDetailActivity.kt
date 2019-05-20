@@ -21,9 +21,11 @@ class PokeDetailActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        collapsing_toolbar.title = pokemon?.name ?: "NULL NAME"
-        collapsing_toolbar.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.white))
-        collapsing_toolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white))
+        collapsing_toolbar.apply {
+            title = pokemon?.name?.capitalize() ?: context.getString(R.string.no_name_placeholder)
+            setCollapsedTitleTextColor(ContextCompat.getColor(this@PokeDetailActivity, R.color.white))
+            setExpandedTitleColor(ContextCompat.getColor(this@PokeDetailActivity, R.color.white))
+        }
 
         paint(pokemon)
 

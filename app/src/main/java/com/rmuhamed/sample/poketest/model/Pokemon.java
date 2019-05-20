@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public final class Pokemon implements Parcelable {
-    private static final String FORMAT = "dd-MM-yy hh:mm";
+    private static final String FORMAT = "dd-MM-yy HH:mm";
     private String id;
     private String type;
     private String name;

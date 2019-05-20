@@ -13,7 +13,7 @@ class AppConfigurator private constructor(context: Context, baseUrl: String) {
         } else {
             INITIALIZED = true
 
-            this.appDatabase = DatabaseConfigurator.getInstance(context)
+            this.appDatabase = DatabaseConfigurator.createDatabase(context)
             this.apiDefinition = RestApiConfigurator.createApi(baseUrl)
         }
     }

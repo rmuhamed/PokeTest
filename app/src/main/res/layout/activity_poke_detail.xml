@@ -9,6 +9,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
+            app:elevation="@dimen/margin_small"
             android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -18,7 +19,7 @@
                 tools:title="@string/app_name"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleGravity="center"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:layout_scrollFlags="scroll|snapMargins">
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
