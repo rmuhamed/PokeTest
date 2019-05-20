@@ -13,8 +13,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.detail.PokeDetailActivity" android:theme="@style/AppTheme.Toolbar"/>
-        <activity android:name=".ui.main.PokeTestActivity">
+        <activity android:name=".ui.detail.PokeDetailActivity"
+                  android:theme="@style/AppTheme.Toolbar"/>
+
+        <activity android:name=".ui.main.PokeTestActivity"
+                  android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

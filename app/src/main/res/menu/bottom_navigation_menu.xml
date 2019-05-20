@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
             android:id="@+id/search_and_catch"
-            android:icon="@drawable/ic_search_to_catch"
+            android:icon="@drawable/ic_round_the_world"
+            app:showAsAction="ifRoom"
             android:title="@string/search_and_catch"/>
 
     <item
             android:id="@+id/my_backpack"
+            app:showAsAction="ifRoom"
             android:icon="@drawable/ic_backpack"
             android:title="@string/backpack"/>
 </menu>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_tiny">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_big">24dp</dimen>
@@ -17,6 +18,9 @@
 
     <dimen name="button_height">56dp</dimen>
 
+    <dimen name="toolbar_height">52dp</dimen>
+
     <dimen name="tall_toolbar_height">64dp</dimen>
     <dimen name="expanded_toolbar">120dp</dimen>
+    <dimen name="image_logo_toolbar">48dp</dimen>
 </resources>

@@ -20,7 +20,7 @@ class CatchThemAllViewModel(
 
     init {
         bindToDataSource()
-        getPokemonInfoFrom((1..150).shuffled().first())
+        getPokemonInfoFrom((1..200).shuffled().first())
     }
 
     private fun bindToDataSource() {
@@ -60,6 +60,6 @@ class CatchThemAllViewModel(
     }
 
     fun searchForAnotherPokemon() {
-        getPokemonInfoFrom((1..150).shuffled().first())
+        getPokemonInfoFrom((1..200).shuffled().first())
     }
 }

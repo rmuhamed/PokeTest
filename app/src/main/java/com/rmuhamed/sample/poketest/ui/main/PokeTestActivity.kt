@@ -11,6 +11,7 @@ class PokeTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_poke_test)
+        setSupportActionBar(toolbar)
 
         load(CatchThemAllFragment.newInstance(), "CatchThemAll")
 
