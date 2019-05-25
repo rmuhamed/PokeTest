@@ -3,7 +3,6 @@ package com.rmuhamed.sample.poketest.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.BUNDLE_CONSTANTS.POKEMON
@@ -11,7 +10,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_poke_detail.*
 
 class PokeDetailActivity : AppCompatActivity() {
-    private lateinit var viewModel: PokeDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +26,6 @@ class PokeDetailActivity : AppCompatActivity() {
         }
 
         paint(pokemon)
-
-        viewModel = ViewModelProviders.of(this).get(PokeDetailViewModel::class.java)
     }
 
     private fun paint(pokemon: Pokemon?) {
