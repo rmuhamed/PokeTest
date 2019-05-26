@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.rmuhamed.sample.poketest.ui.BUNDLE_CONSTANTS.POKEMON
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
+import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter

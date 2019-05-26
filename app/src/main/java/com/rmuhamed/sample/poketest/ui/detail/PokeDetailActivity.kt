@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.rmuhamed.sample.poketest.ui.BUNDLE_CONSTANTS.POKEMON
+import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_poke_detail.*
 

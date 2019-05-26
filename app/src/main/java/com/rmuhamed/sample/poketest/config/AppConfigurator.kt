@@ -1,11 +1,14 @@
 package com.rmuhamed.sample.poketest.config
 
 import android.content.Context
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class AppConfigurator private constructor(context: Context, baseUrl: String) {
 
     val appDatabase: AppDatabase
     val apiDefinition: RestApiDefinition
+    val threadExecutor: ExecutorService
 
     init {
         if (INITIALIZED) {
@@ -15,6 +18,7 @@ class AppConfigurator private constructor(context: Context, baseUrl: String) {
 
             this.appDatabase = DatabaseConfigurator.createDatabase(context)
             this.apiDefinition = RestApiConfigurator.createApi(baseUrl)
+            this.threadExecutor = Executors.newFixedThreadPool(4)
         }
     }
 

@@ -1,19 +1,23 @@
 package com.rmuhamed.sample.poketest.data;
 
-public interface IRepository<T, E> {
+import com.rmuhamed.sample.poketest.model.Pokemon;
 
-    default void findBy(Integer id) {
+import java.util.List;
+import java.util.concurrent.Future;
+
+public interface IRepository<T> {
+
+    Future<Pokemon> findBy(String id);
+
+    default Future<List<T>> getAll() {
+        return null;
     }
 
-    default void getAll() {
+    default Future<Boolean> save(T toBeSaved) {
+        return null;
     }
 
-    default void save(T toBeSaved) {
-    }
-
-    default void addObserver(AsyncResult<T, E> observer) {
-    }
-
-    default void exists(String id) {
+    default Future<Boolean> exists(String id) {
+        return null;
     }
 }

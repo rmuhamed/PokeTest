@@ -1,21 +1,28 @@
 package com.rmuhamed.sample.poketest.ui.main
 
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.rmuhamed.sample.poketest.data.IRepository
-import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.Mockito
+import org.mockito.internal.verification.Times
+import java.util.concurrent.Future
 
-@RunWith(MockitoJUnitRunner::class)
 class MyBackpackViewModelTest {
 
     @Mock
-    val mockedRepo = mock<IRepository<Pokemon, Error>>()
+    val mockedFuture = mock<Future<List<Pokemon>>> {
+        on { get() } doReturn emptyList()
+    }
+
+    @Mock
+    val mockedRepo = mock<IRepository<Pokemon>> {
+        on { all } doReturn mockedFuture
+    }
 
     lateinit var viewModel: MyBackpackViewModel
 
@@ -25,12 +32,9 @@ class MyBackpackViewModelTest {
     }
 
     @Test
-    fun getErrorObservable() {
-        assertNotNull(viewModel.errorObservable)
-    }
+    fun test_GetMyPokemonsObservable() {
+        Mockito.verify(mockedRepo, Times(1)).all
 
-    @Test
-    fun getMyPokemonsObservable() {
         assertNotNull(viewModel.myPokemonsObservable)
     }
 }
