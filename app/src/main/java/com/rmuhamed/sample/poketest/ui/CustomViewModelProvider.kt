@@ -3,14 +3,13 @@ package com.rmuhamed.sample.poketest.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rmuhamed.sample.poketest.data.IRepository
-import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.main.CatchThemAllViewModel
 import com.rmuhamed.sample.poketest.ui.main.MyBackpackViewModel
 
 class CustomViewModelProvider(
-    private val networkRepository: IRepository<Pokemon, Error>,
-    private val persistenceRepository: IRepository<Pokemon, Error>
+    private val networkRepository: IRepository<Pokemon>,
+    private val persistenceRepository: IRepository<Pokemon>
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

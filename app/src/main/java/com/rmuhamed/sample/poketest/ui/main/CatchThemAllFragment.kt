@@ -30,7 +30,7 @@ class CatchThemAllFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        skip_it_button.setOnClickListener { viewModel.searchForAnotherPokemon() }
+        skip_it_button.setOnClickListener { viewModel.letsFindPokemon() }
         catch_it_button.setOnClickListener { buttonView -> viewModel.catchPokemon(buttonView.tag as Pokemon) }
     }
 
@@ -69,7 +69,7 @@ class CatchThemAllFragment : Fragment() {
 
         viewModel.caughtPokemonObservable.observe(this, Observer {
             catch_it_button.visibility = View.GONE
-            viewModel.searchForAnotherPokemon()
+            viewModel.letsFindPokemon()
         })
     }
 

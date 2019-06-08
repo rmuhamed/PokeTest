@@ -1,5 +1,5 @@
 package com.rmuhamed.sample.poketest.ui
 
-object BUNDLE_CONSTANTS {
+object IntentConstants {
     const val POKEMON = "pokemon"
 }

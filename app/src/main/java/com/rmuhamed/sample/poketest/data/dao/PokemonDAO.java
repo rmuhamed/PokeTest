@@ -16,4 +16,7 @@ public interface PokemonDAO {
 
     @Insert
     void save(PokemonEntity aPokemonEntity);
+
+    @Query("SELECT * FROM PokemonEntity WHERE id = :id")
+    PokemonEntity findBy(String id);
 }

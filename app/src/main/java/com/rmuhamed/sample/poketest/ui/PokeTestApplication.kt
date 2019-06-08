@@ -5,7 +5,6 @@ import com.rmuhamed.sample.poketest.BuildConfig
 import com.rmuhamed.sample.poketest.config.AppConfigurator
 import com.rmuhamed.sample.poketest.data.IRepository
 import com.rmuhamed.sample.poketest.data.RepositoryFactory
-import com.rmuhamed.sample.poketest.model.Error
 import com.rmuhamed.sample.poketest.model.Pokemon
 
 
@@ -13,8 +12,8 @@ class PokeTestApplication : Application() {
 
     lateinit var appConfigurator: AppConfigurator
 
-    lateinit var networkRepository: IRepository<Pokemon, Error>
-    lateinit var persistenceRepository: IRepository<Pokemon, Error>
+    lateinit var networkRepository: IRepository<Pokemon>
+    lateinit var persistenceRepository: IRepository<Pokemon>
 
     override fun onCreate() {
         super.onCreate()

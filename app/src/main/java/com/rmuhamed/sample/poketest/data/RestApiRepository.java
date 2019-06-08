@@ -3,40 +3,29 @@ package com.rmuhamed.sample.poketest.data;
 import com.rmuhamed.sample.poketest.config.RestApiDefinition;
 import com.rmuhamed.sample.poketest.data.dto.PokemonDTO;
 import com.rmuhamed.sample.poketest.data.mappers.Mappers;
-import com.rmuhamed.sample.poketest.model.Error;
 import com.rmuhamed.sample.poketest.model.Pokemon;
-import org.jetbrains.annotations.NotNull;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class RestApiRepository implements IRepository<Pokemon, Error> {
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
-    private static final String IMPLEMENTATION_ABSENT_ERROR = "Not applicable for this kind of repo";
+public class RestApiRepository implements IRepository<Pokemon> {
     private final RestApiDefinition apiDefinition;
-    private AsyncResult<Pokemon, Error> observer;
+    private final ExecutorService executorService;
 
-    RestApiRepository(RestApiDefinition apiDefinition) {
+    RestApiRepository(RestApiDefinition apiDefinition, ExecutorService executorService) {
         this.apiDefinition = apiDefinition;
+        this.executorService = executorService;
     }
 
-    @Override
-    public void addObserver(AsyncResult<Pokemon, Error> observer) {
-        this.observer = observer;
-    }
 
     @Override
-    public void findBy(Integer id) {
-        this.apiDefinition.fetchBy(id).enqueue(new Callback<PokemonDTO>() {
-            @Override
-            public void onResponse(@NotNull Call<PokemonDTO> call, @NotNull Response<PokemonDTO> response) {
-                observer.onSuccess(Mappers.toBusinessObject(response.body()));
-            }
+    public Future<Pokemon> findBy(String id) {
+        Callable<Pokemon> callable = () -> {
+            PokemonDTO dto = this.apiDefinition.fetchBy(id).execute().body();
+            return Mappers.toBusinessObject(dto);
+        };
 
-            @Override
-            public void onFailure(@NotNull Call<PokemonDTO> call, @NotNull Throwable t) {
-                observer.onError(new Error(t.getMessage()));
-            }
-        });
+        return this.executorService.submit(callable);
     }
 }
