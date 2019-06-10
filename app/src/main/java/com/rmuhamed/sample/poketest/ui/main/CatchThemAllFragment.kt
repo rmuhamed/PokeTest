@@ -11,7 +11,6 @@ import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
 class CatchThemAllFragment : Fragment() {
@@ -45,20 +44,10 @@ class CatchThemAllFragment : Fragment() {
 
         viewModel.pokemonInfoObservable.observe(this, Observer {
             loading.visibility = View.INVISIBLE
-
-            poke_info_container.visibility = View.VISIBLE
             skip_it_button.visibility = View.VISIBLE
 
-            //TODO: RM - WRAP Into customView, to not expose Library usage
-            Picasso.get().load(it.picture)
-                .placeholder(R.drawable.ic_pokedex_placeholder)
-                .into(pokemon_picture_image)
-            //TODO: RM - Also think about a PokemonView to put this away
-            pokemon_name_label.text = it.name
-            pokemon_height_label.text = getString(R.string.height_placeholder, it.height)
-            pokemon_weight_label.text = getString(R.string.weight_placeholder, it.weight)
-            pokemon_type_label.text = getString(R.string.type_placeholder, it.type)
-            pokemon_base_experience_label.text = getString(R.string.base_experience_placeholder, it.baseExperience)
+            pokemon_card_view.visibility = View.VISIBLE
+            pokemon_card_view.from(it)
 
             catch_it_button.tag = it
         })
@@ -72,5 +61,4 @@ class CatchThemAllFragment : Fragment() {
             viewModel.letsFindPokemon()
         })
     }
-
 }

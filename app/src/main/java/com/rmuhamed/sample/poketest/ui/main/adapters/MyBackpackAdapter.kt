@@ -6,38 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.squareup.picasso.Picasso
+import com.rmuhamed.sample.poketest.ui.view.paintFrom
 import kotlinx.android.synthetic.main.item_pokemon.view.*
 
 class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemViewHandler: MyBackpackItemViewHandler) :
     RecyclerView.Adapter<MyBackpackAdapter.MyBackpackItemViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyBackpackItemViewHolder {
-        return MyBackpackItemViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyBackpackItemViewHolder =
+        MyBackpackItemViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_pokemon, parent, false)
         )
-    }
-
-    override fun getItemCount(): Int {
-        return pokemons?.size ?: 0
-    }
+    
+    override fun getItemCount(): Int = pokemons?.size ?: 0
 
     override fun onBindViewHolder(holder: MyBackpackItemViewHolder, position: Int) {
         pokemons?.let {
             val pokemonAt = pokemons[position]
 
             holder.paintWith(pokemonAt)
-            //TODO: RM - WRAP Into customView, to not expose Library usage
-            Picasso.get().load(pokemonAt.picture)
-                .placeholder(R.drawable.ic_pikachu_back)
-                .into(holder.itemView.pokemon_picture_image)
-
-            holder.itemView.setOnClickListener {
-                itemViewHandler.onPokemonSelected(
-                    pokemonAt,
-                    holder.itemView.pokemon_picture_image
-                )
-            }
+            holder.onClickHandler(itemViewHandler, pokemonAt)
         }
     }
 
@@ -51,6 +38,13 @@ class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemVi
             view.pokemon_weight_label.text = view.context.getString(R.string.weight_placeholder, pokemon.weight)
             view.pokemon_capturedat_label.text =
                 view.context.getString(R.string.captured_at_placeholder, pokemon.capturedAtStr)
+            view.pokemon_picture_image.paintFrom(pokemon.picture)
+        }
+
+        fun onClickHandler(onItemClickHandler: MyBackpackItemViewHandler, pokemon: Pokemon) {
+            view.setOnClickListener {
+                onItemClickHandler.onPokemonSelected(pokemon, view.pokemon_picture_image)
+            }
         }
     }
 }
