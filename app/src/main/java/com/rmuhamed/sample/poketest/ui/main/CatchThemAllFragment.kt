@@ -13,34 +13,32 @@ import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
-class CatchThemAllFragment : Fragment() {
+open class CatchThemAllFragment : Fragment() {
 
     companion object {
         fun newInstance() = CatchThemAllFragment()
     }
 
-    private lateinit var viewModel: CatchThemAllViewModel
+    val viewModel: AbstractCatchThemAllViewModel by lazy {
+        getViewModel(activity!!.application as PokeTestApplication)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.catch_them_all_fragment, container, false)
-    }
+                              savedInstanceState: Bundle?
+    ): View? =
+        inflater.inflate(R.layout.catch_them_all_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        skip_it_button.setOnClickListener { viewModel.letsFindPokemon() }
+        skip_it_button.setOnClickListener { viewModel.letsFindAPokemon() }
         catch_it_button.setOnClickListener { buttonView -> viewModel.catchPokemon(buttonView.tag as Pokemon) }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val application = activity!!.application as PokeTestApplication
-
-        viewModel = ViewModelProviders
-            .of(this, CustomViewModelProvider(application.networkRepository, application.persistenceRepository))
-            .get(CatchThemAllViewModel::class.java)
+        viewModel.letsFindAPokemon()
 
         viewModel.pokemonInfoObservable.observe(this, Observer {
             loading.visibility = View.INVISIBLE
@@ -58,7 +56,18 @@ class CatchThemAllFragment : Fragment() {
 
         viewModel.caughtPokemonObservable.observe(this, Observer {
             catch_it_button.visibility = View.GONE
-            viewModel.letsFindPokemon()
+            viewModel.letsFindAPokemon()
         })
     }
+
+    private fun getViewModel(application: PokeTestApplication): AbstractCatchThemAllViewModel =
+        ViewModelProviders
+            .of(
+                this,
+                CustomViewModelProvider(
+                    application.networkRepository,
+                    application.persistenceRepository
+                )
+            )
+            .get(CatchThemAllViewModel::class.java)
 }

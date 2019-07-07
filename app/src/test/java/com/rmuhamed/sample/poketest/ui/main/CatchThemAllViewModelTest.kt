@@ -6,12 +6,10 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.internal.verification.Times
 import java.util.concurrent.Future
 
 class CatchThemAllViewModelTest {
-    @Mock
     val mockedRepo = mock<IRepository<Pokemon>>()
 
     lateinit var viewModel: CatchThemAllViewModel
@@ -69,7 +67,7 @@ class CatchThemAllViewModelTest {
         }
         whenever(mockedRepo.findBy(any())).thenReturn(resultPoke)
 
-        viewModel.letsFindPokemon()
+        viewModel.letsFindAPokemon()
 
         verify(mockedRepo, Times(2)).findBy(any())
     }

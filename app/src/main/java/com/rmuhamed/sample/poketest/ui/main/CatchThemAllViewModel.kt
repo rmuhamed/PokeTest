@@ -1,31 +1,21 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.rmuhamed.sample.poketest.data.IRepository
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.util.randomizeGet
 import java.util.*
 
-class CatchThemAllViewModel(
+open class CatchThemAllViewModel(
     private val networkRepository: IRepository<Pokemon>,
     private val persistenceRepository: IRepository<Pokemon>
-) : ViewModel() {
+) : AbstractCatchThemAllViewModel() {
 
-    val pokemonInfoObservable = MutableLiveData<Pokemon>()
-    val catchItButtonObservable = MutableLiveData<Boolean>()
-    val caughtPokemonObservable = MutableLiveData<Boolean>()
-
-    init {
-        letsFindPokemon()
-    }
-
-    fun catchPokemon(pokemon: Pokemon) {
+    override fun catchPokemon(pokemon: Pokemon) {
         pokemon.capturedAt = Date()
         caughtPokemonObservable.postValue(persistenceRepository.save(pokemon).get())
     }
 
-    fun letsFindPokemon() {
+    override fun letsFindAPokemon() {
         getPokemonInfoFrom(randomizeGet(1, 200).toString())
     }
 
