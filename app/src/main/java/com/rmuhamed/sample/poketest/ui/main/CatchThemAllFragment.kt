@@ -19,8 +19,8 @@ open class CatchThemAllFragment : Fragment() {
         fun newInstance() = CatchThemAllFragment()
     }
 
-    val viewModel: AbstractCatchThemAllViewModel by lazy {
-        getViewModel(activity!!.application as PokeTestApplication)
+    val viewModel: AbstractCatchThemAllViewModel by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        initViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -60,14 +60,15 @@ open class CatchThemAllFragment : Fragment() {
         })
     }
 
-    private fun getViewModel(application: PokeTestApplication): AbstractCatchThemAllViewModel =
-        ViewModelProviders
-            .of(
-                this,
-                CustomViewModelProvider(
-                    application.networkRepository,
-                    application.persistenceRepository
-                )
-            )
+    private fun initViewModel(): AbstractCatchThemAllViewModel {
+        val customViewModelProvider = CustomViewModelProvider(
+            (activity!!.application as PokeTestApplication).networkRepository,
+            (activity!!.application as PokeTestApplication).persistenceRepository
+        )
+
+        return ViewModelProviders
+            .of(this, customViewModelProvider)
             .get(CatchThemAllViewModel::class.java)
+
+    }
 }

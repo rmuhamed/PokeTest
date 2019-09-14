@@ -18,7 +18,6 @@ public class RestApiRepository implements IRepository<Pokemon> {
         this.executorService = executorService;
     }
 
-
     @Override
     public Future<Pokemon> findBy(String id) {
         Callable<Pokemon> callable = () -> {
