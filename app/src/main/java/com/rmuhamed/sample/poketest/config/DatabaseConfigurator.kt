@@ -5,7 +5,7 @@ import androidx.room.Room
 
 object DatabaseConfigurator {
     @JvmStatic
-    fun createDatabase(context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, "pokemon-db").build()
+    fun createDatabase(dbName: String, context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, dbName).build()
     }
 }

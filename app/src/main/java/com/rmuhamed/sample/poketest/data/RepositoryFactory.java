@@ -1,30 +1,29 @@
 package com.rmuhamed.sample.poketest.data;
 
-import com.rmuhamed.sample.poketest.config.AppConfigurator;
+import com.rmuhamed.sample.poketest.config.AppConfiguration;
 import com.rmuhamed.sample.poketest.model.Pokemon;
-import com.rmuhamed.sample.poketest.ui.PokeTestApplication;
+
 import org.jetbrains.annotations.NotNull;
 
 public class RepositoryFactory {
-    private PokeTestApplication application;
+    private AppConfiguration configuration;
 
     public enum Type {NETWORK, DATABASE}
 
     private RepositoryFactory(@NotNull Builder builder) {
-        this.application = builder.application;
+        this.configuration = builder.configuration;
     }
 
     public IRepository<Pokemon> create(@NotNull Type type) {
-        AppConfigurator configurator = this.application.getAppConfigurator();
         IRepository<Pokemon> repo;
 
         switch (type) {
             case NETWORK:
-                repo = new RestApiRepository(configurator.getApiDefinition(), configurator.getThreadExecutor());
+                repo = new RestApiRepository(this.configuration.getApiDefinition(), this.configuration.getThreadExecutor());
                 break;
 
             case DATABASE:
-                repo = new DatabaseRepository(configurator.getAppDatabase().pokemonDAO(), configurator.getThreadExecutor());
+                repo = new DatabaseRepository(this.configuration.getAppDatabase().pokemonDAO(), this.configuration.getThreadExecutor());
                 break;
 
             default:
@@ -35,10 +34,10 @@ public class RepositoryFactory {
     }
 
     public static class Builder {
-        private PokeTestApplication application;
+        private AppConfiguration configuration;
 
-        public Builder application(PokeTestApplication application) {
-            this.application = application;
+        public Builder configuration(AppConfiguration configuration) {
+            this.configuration = configuration;
             return this;
         }
 

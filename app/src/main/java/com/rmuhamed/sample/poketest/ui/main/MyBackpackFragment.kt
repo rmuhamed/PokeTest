@@ -2,45 +2,36 @@ package com.rmuhamed.sample.poketest.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
+import com.rmuhamed.sample.poketest.config.AppConfiguration
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
-import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackItemViewHandler
 import kotlinx.android.synthetic.main.my_backpack_fragment.*
 
 
-class MyBackpackFragment : Fragment() {
+class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
 
     companion object {
         fun newInstance() = MyBackpackFragment()
     }
 
-    private lateinit var viewModel: MyBackpackViewModel
+    private val viewModel: MyBackpackViewModel by lazy {
+        val appConfiguration = AppConfiguration.get()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.my_backpack_fragment, container, false)
+        initViewModel(appConfiguration)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val application = activity!!.application as PokeTestApplication
-
-        viewModel = ViewModelProviders
-            .of(this, CustomViewModelProvider(application.networkRepository, application.persistenceRepository))
-            .get(MyBackpackViewModel::class.java)
 
         viewModel.myPokemonsObservable.observe(this, Observer {
             progress.visibility = View.GONE
@@ -66,9 +57,19 @@ class MyBackpackFragment : Fragment() {
         //val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")
 
         this.startActivity(Intent().apply {
-            setClass(this@MyBackpackFragment.context, PokeDetailActivity::class.java)
+            setClass(this@MyBackpackFragment.context!!, PokeDetailActivity::class.java)
             putExtra(POKEMON, pokemon)
         })
     }
 
+    private fun initViewModel(appConfiguration: AppConfiguration): MyBackpackViewModel {
+        val customVMProvider = CustomViewModelProvider(
+            appConfiguration.networkRepository,
+            appConfiguration.persistenceRepository
+        )
+
+        return ViewModelProviders
+            .of(this, customVMProvider)
+            .get(MyBackpackViewModel::class.java)
+    }
 }

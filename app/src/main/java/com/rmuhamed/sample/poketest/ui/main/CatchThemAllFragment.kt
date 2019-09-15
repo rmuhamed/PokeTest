@@ -1,32 +1,26 @@
 package com.rmuhamed.sample.poketest.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
+import com.rmuhamed.sample.poketest.config.AppConfiguration
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
-import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
-open class CatchThemAllFragment : Fragment() {
+open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
 
     companion object {
         fun newInstance() = CatchThemAllFragment()
     }
 
-    val viewModel: AbstractCatchThemAllViewModel by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-        initViewModel()
+    private val viewModel: AbstractCatchThemAllViewModel by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        val configuration = getConfiguration()
+        initViewModel(configuration)
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.catch_them_all_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,10 +54,10 @@ open class CatchThemAllFragment : Fragment() {
         })
     }
 
-    private fun initViewModel(): AbstractCatchThemAllViewModel {
+    private fun initViewModel(appConfiguration: AppConfiguration): AbstractCatchThemAllViewModel {
         val customViewModelProvider = CustomViewModelProvider(
-            (activity!!.application as PokeTestApplication).networkRepository,
-            (activity!!.application as PokeTestApplication).persistenceRepository
+            appConfiguration.networkRepository,
+            appConfiguration.persistenceRepository
         )
 
         return ViewModelProviders
@@ -71,4 +65,6 @@ open class CatchThemAllFragment : Fragment() {
             .get(CatchThemAllViewModel::class.java)
 
     }
+
+    fun getConfiguration(): AppConfiguration = AppConfiguration.get()
 }
