@@ -69,6 +69,6 @@ class CatchThemAllViewModelTest {
 
         viewModel.letsFindAPokemon()
 
-        verify(mockedRepo, Times(2)).findBy(any())
+        verify(mockedRepo, Times(1)).findBy(any())
     }
 }
