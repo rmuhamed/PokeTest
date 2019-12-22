@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file("jacoco.gradle")
 
 android {
     compileSdkVersion 29
@@ -20,6 +21,7 @@ android {
         debug {
             buildConfigField "String", "DB_NAME", '"pokemon-db"'
             buildConfigField "String", "BASE_API_URL", '"https://pokeapi.co/api/v2/"'
+            testCoverageEnabled true
         }
 
         release {
@@ -35,8 +37,15 @@ android {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
+
     testOptions {
-        unitTests.returnDefaultValues = true
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+        animationsDisabled true
+
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
     }
 }
 
