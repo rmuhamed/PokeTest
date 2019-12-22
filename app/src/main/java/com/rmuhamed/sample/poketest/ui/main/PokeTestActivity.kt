@@ -13,7 +13,7 @@ class PokeTestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_poke_test)
         setSupportActionBar(toolbar)
 
-        load(CatchThemAllFragment.newInstance(), "CatchThemAll")
+//        load(CatchThemAllFragment.newInstance(), "CatchThemAll")
 
         navigation_container.setOnNavigationItemSelectedListener {
             when (it.itemId) {
