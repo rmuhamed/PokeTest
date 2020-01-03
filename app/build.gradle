@@ -34,12 +34,11 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     testOptions {
-        execution 'ANDROID_TEST_ORCHESTRATOR'
         animationsDisabled true
 
         unitTests {
@@ -61,7 +60,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'androidx.activity:activity-ktx:1.0.0'
-
     implementation 'androidx.fragment:fragment-ktx:1.1.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -79,12 +77,12 @@ dependencies {
     testImplementation "org.mockito:mockito-core:2.28.2"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
-    androidTestImplementation 'androidx.fragment:fragment-testing:1.1.0'
+    implementation 'androidx.fragment:fragment:1.1.0'
+    implementation 'androidx.fragment:fragment-testing:1.1.0'
+    implementation 'androidx.test:core:1.2.0'
 
-    androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     androidTestImplementation "org.mockito:mockito-android:2.28.2"
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 }
