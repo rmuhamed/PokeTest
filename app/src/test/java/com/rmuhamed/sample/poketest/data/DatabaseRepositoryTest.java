@@ -3,6 +3,7 @@ package com.rmuhamed.sample.poketest.data;
 import com.rmuhamed.sample.poketest.data.dao.PokemonDAO;
 import com.rmuhamed.sample.poketest.data.dao.PokemonEntity;
 import com.rmuhamed.sample.poketest.model.Pokemon;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class DatabaseRepositoryTest {
     private DatabaseRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.repository = new DatabaseRepository(mockDao, executorService);
     }
 

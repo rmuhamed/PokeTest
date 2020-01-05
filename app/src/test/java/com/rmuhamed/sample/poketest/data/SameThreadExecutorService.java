@@ -1,5 +1,7 @@
 package com.rmuhamed.sample.poketest.data;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.AbstractExecutorService;
@@ -25,11 +27,12 @@ public class SameThreadExecutorService extends AbstractExecutorService {
     }
 
     @Override
-    public boolean awaitTermination(long theTimeout, TimeUnit theUnit) throws InterruptedException {
+    public boolean awaitTermination(long theTimeout, @NotNull TimeUnit theUnit) {
         shutdown();
         return terminated;
     }
 
+    @NotNull
     @Override
     public List<Runnable> shutdownNow() {
         return Collections.emptyList();

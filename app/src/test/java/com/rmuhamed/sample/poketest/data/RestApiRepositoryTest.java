@@ -2,6 +2,7 @@ package com.rmuhamed.sample.poketest.data;
 
 import com.rmuhamed.sample.poketest.config.RestApiDefinition;
 import com.rmuhamed.sample.poketest.data.dto.PokemonDTO;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,11 +11,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -29,7 +31,7 @@ public class RestApiRepositoryTest {
     private RestApiRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         repository = new RestApiRepository(apiDefinition, executorService);
     }
 
