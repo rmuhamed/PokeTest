@@ -8,11 +8,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.rmuhamed.sample.poketest.PokeTestApplication
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
-import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackItemViewHandler

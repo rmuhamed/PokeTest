@@ -7,15 +7,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.R
+import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
-import com.rmuhamed.sample.poketest.ui.PokeTestApplication
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
 open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
 
     private lateinit var viewModel: CatchThemAllViewModel
-    private lateinit var app: PokeTestApplication
+    private lateinit var app: TemplatePokeTestApplication
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,7 +27,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        app = requireNotNull(activity).application as PokeTestApplication
+        app = requireNotNull(activity).application as TemplatePokeTestApplication
 
         viewModel = initViewModel()
     }

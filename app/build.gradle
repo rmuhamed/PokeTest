@@ -15,7 +15,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "0.0.1"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "com.rmuhamed.sample.poketest.ui.main.runner.MockAndroidJUnitRunner"
     }
     buildTypes {
         debug {
