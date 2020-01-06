@@ -14,9 +14,10 @@ class CatchThemAllViewModelTest {
 
     lateinit var viewModel: CatchThemAllViewModel
 
+    private val poke = Pokemon.Builder().setId("1").build()
+
     @Before
     fun setUp() {
-        val poke = Pokemon.Builder().setId("1").build()
 
         val futureExists = mock<Future<Boolean>> {
             on { get() } doReturn false
@@ -26,8 +27,13 @@ class CatchThemAllViewModelTest {
             on { get() } doReturn poke
         }
 
+        val saveFuture = mock<Future<Boolean>> {
+            on { get() } doReturn true
+        }
+
         whenever(mockedRepo.exists(any())).thenReturn(futureExists)
         whenever(mockedRepo.findBy(any())).thenReturn(findByFuture)
+        whenever(mockedRepo.save(any())).thenReturn(saveFuture)
 
         viewModel = CatchThemAllViewModel(mockedRepo, mockedRepo)
     }
@@ -48,27 +54,26 @@ class CatchThemAllViewModelTest {
     }
 
     @Test
-    fun test_CatchPokemon() {
-        val result = mock<Future<Boolean>> {
-            on { get() } doReturn true
-        }
+    fun test_LetsFindAnyPokemon() {
+        viewModel.letsFindAnyPokemon()
 
-        whenever(mockedRepo.save(any())).thenReturn(result)
-        val somePoke = Pokemon.Builder().setId("1").build()
-        viewModel.catchPokemon(somePoke)
-
-        verify(mockedRepo).save(somePoke)
+        //One at init, the second because we are explicitly calling the method
+        verify(mockedRepo, times(2)).findBy(any())
     }
 
     @Test
-    fun test_LetsFindPokemon() {
-        val resultPoke = mock<Future<Pokemon>> {
-            on { get() } doReturn Pokemon.Builder().setId("1").build()
-        }
-        whenever(mockedRepo.findBy(any())).thenReturn(resultPoke)
+    fun test_CatchPokemon() {
+        viewModel.catchPokemon(poke)
 
-        viewModel.letsFindAPokemon()
+        verify(mockedRepo, Times(1)).save(poke)
+    }
 
-        verify(mockedRepo, Times(1)).findBy(any())
+    @Test
+    fun test_checkIfPokemonHasBeenCaught() {
+        viewModel.checkIfPokemonHasBeenCaught(poke)
+
+
+        //One at init, the second because we are explicitly calling the method
+        verify(mockedRepo, Times(2)).exists(poke.id)
     }
 }

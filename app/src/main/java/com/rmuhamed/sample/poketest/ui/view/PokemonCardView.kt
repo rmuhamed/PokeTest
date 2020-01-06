@@ -27,7 +27,11 @@ class PokemonCardView : CardView {
             pokemon_type_label.text = context.getString(R.string.type_placeholder, it.type)
             pokemon_base_exp_label.text = context.getString(R.string.base_experience_placeholder, it.baseExperience)
 
-            pokemon_picture_image.paintFrom(it.picture)
+            if (it.picture.isNotBlank()) {
+                pokemon_picture_image.paintFrom(it.picture)
+            } else {
+                pokemon_picture_image.setImageResource(R.drawable.ic_pokedex_placeholder)
+            }
         }
     }
 }

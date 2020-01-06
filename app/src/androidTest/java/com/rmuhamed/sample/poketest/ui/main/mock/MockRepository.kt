@@ -8,7 +8,12 @@ import java.util.concurrent.Future
 
 class MockRepository(private val executorService: ExecutorService) : IRepository<Pokemon> {
     override fun findBy(id: String?): Future<Pokemon> {
-        return executorService.submit(Callable { Pokemon.Builder().setName("Fake").build() })
+        return executorService.submit(Callable {
+            Pokemon.Builder()
+                .setName("Fake")
+                .setPicture("")
+                .build()
+        })
     }
 
     override fun exists(id: String?): Future<Boolean> {
