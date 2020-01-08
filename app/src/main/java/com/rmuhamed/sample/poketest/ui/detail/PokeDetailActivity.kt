@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
-import com.squareup.picasso.Picasso
+import com.rmuhamed.sample.poketest.ui.view.paintFrom
 import kotlinx.android.synthetic.main.activity_poke_detail.*
 
 class PokeDetailActivity : AppCompatActivity() {
@@ -30,9 +30,7 @@ class PokeDetailActivity : AppCompatActivity() {
 
     private fun paint(pokemon: Pokemon?) {
         pokemon?.let {
-            Picasso.get().load(pokemon.picture)
-                .placeholder(R.drawable.ic_pokedex_placeholder)
-                .into(pokemon_picture_image)
+            pokemon_picture_image.paintFrom(it.picture)
             pokemon_type_label.text = getString(R.string.type_placeholder, pokemon.type)
             pokemon_base_experience_label.text =
                 getString(R.string.base_experience_placeholder, pokemon.baseExperience)

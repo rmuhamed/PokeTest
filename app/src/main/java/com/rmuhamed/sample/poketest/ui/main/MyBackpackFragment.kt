@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.rmuhamed.sample.poketest.PokeTestApplication
 import com.rmuhamed.sample.poketest.R
+import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
@@ -21,13 +22,13 @@ import kotlinx.android.synthetic.main.my_backpack_fragment.*
 
 class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
 
-    private lateinit var app: PokeTestApplication
+    private lateinit var app: TemplatePokeTestApplication
     private lateinit var viewModel: MyBackpackViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        app = requireNotNull(activity).application as PokeTestApplication
+        app = requireNotNull(activity).application as TemplatePokeTestApplication
 
         viewModel = initViewModel()
     }
