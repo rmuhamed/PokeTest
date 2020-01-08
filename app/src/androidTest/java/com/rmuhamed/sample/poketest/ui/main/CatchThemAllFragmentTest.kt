@@ -2,6 +2,7 @@ package com.rmuhamed.sample.poketest.ui.main
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -19,7 +20,7 @@ class CatchThemAllFragmentTest {
 
     @Before
     fun setup() {
-        onView(withId(R.id.search_and_catch)).perform(ViewActions.click())
+        onView(withId(R.id.search_and_catch)).perform(click())
     }
 
     @Test
