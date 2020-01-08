@@ -25,16 +25,26 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     def kotlinSrc = []
     def execution = []
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def fileFilter = [
+            '**/R.class',
+            '**/Manifest*.*',
+            'android/**/*.*',
+            'androidx/room/*.*', //Exclude all anonymous class from room-compiler
+            '**/*_Impl*.*', //DAO generated implementation by room-compiler
+            '**/BuildConfig.*',
+            '**/*Test*.*'
+    ]
 
-    rootProject.subprojects.each { proj ->
-        javaClasses   << fileTree(dir: "$proj.buildDir/intermediates/javac/debug", excludes: fileFilter)
-        kotlinClasses << fileTree(dir: "$proj.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-        javaSrc       << "$proj.projectDir/src/main/java"
-        kotlinSrc     << "$proj.projectDir/src/main/kotlin"
-        execution     << fileTree(dir: proj.buildDir,
-                includes: ['jacoco/testDebugUnitTest.exec',
-                           'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'])
+    rootProject.subprojects.each { project ->
+        javaClasses   << fileTree(dir: "$project.buildDir/intermediates/javac/debug", excludes: fileFilter)
+        kotlinClasses << fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+        javaSrc       << "$project.projectDir/src/main/java"
+        kotlinSrc     << "$project.projectDir/src/main/kotlin"
+        execution << fileTree(dir: project.buildDir, includes:
+                [
+                        'jacoco/testDebugUnitTest.exec',
+                        'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
+                ])
     }
 
     print "Setting source and class directories"
