@@ -8,10 +8,9 @@ import java.util.concurrent.Future
 
 class MockRepository(private val executorService: ExecutorService) : IRepository<Pokemon> {
 
-
     override fun findBy(id: String?): Future<Pokemon> {
         return executorService.submit(Callable {
-            getSinglePokemon("1", "fake")
+            MockPokemonFactory.create("1", "fake")
         })
     }
 
@@ -28,15 +27,8 @@ class MockRepository(private val executorService: ExecutorService) : IRepository
     private fun getPokemonList(): MutableList<Pokemon> {
         val pokemonList = mutableListOf<Pokemon>()
         IntRange(1,10).forEach {
-            pokemonList.add(getSinglePokemon(it.toString(), "Fake$it"))
+            pokemonList.add(MockPokemonFactory.create(it.toString(), "Fake$it"))
         }
         return pokemonList
     }
-
-    private fun getSinglePokemon(id: String, name: String): Pokemon =
-        Pokemon.Builder()
-            .setName(name)
-            .setId(id)
-            .setPicture("")
-            .build()
 }
