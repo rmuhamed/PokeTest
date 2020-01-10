@@ -17,9 +17,7 @@ open class CatchThemAllViewModel(
     val caughtPokemonObservable = MutableLiveData<Boolean>()
 
     init {
-        val pokemon = letsFindAnyPokemon()
-
-        checkIfPokemonHasBeenCaught(pokemon)
+        letsFindAnyPokemon()
     }
 
     fun catchPokemon(pokemon: Pokemon) {
@@ -27,11 +25,11 @@ open class CatchThemAllViewModel(
         caughtPokemonObservable.postValue(persistenceRepository.save(pokemon).get())
     }
 
-    fun letsFindAnyPokemon(): Pokemon {
+    fun letsFindAnyPokemon() {
         val pokemon = networkRepository.findBy(randomizeGet(1, 200).toString()).get()
         pokemonInfoObservable.postValue(pokemon)
 
-        return pokemon
+        checkIfPokemonHasBeenCaught(pokemon)
     }
 
     @VisibleForTesting
