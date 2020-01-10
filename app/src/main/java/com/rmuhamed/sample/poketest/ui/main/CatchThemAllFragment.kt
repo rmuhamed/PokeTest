@@ -21,7 +21,9 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         skip_it_button.setOnClickListener { viewModel.letsFindAnyPokemon() }
-        catch_it_button.setOnClickListener { buttonView -> viewModel.catchPokemon(buttonView.tag as Pokemon) }
+        catch_it_button.setOnClickListener { buttonView ->
+            viewModel.catchPokemon(buttonView.tag as Pokemon)
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -51,6 +53,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
 
         viewModel.caughtPokemonObservable.observe(this, Observer {
             catch_it_button.visibility = View.GONE
+            viewModel.letsFindAnyPokemon()
         })
     }
 
