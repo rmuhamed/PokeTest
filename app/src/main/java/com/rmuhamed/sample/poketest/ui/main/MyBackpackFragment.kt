@@ -7,12 +7,11 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.rmuhamed.sample.poketest.PokeTestApplication
+import androidx.lifecycle.ViewModelProvider
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.rmuhamed.sample.poketest.ui.CustomViewModelProvider
+import com.rmuhamed.sample.poketest.ui.ViewModelCreator
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
@@ -30,13 +29,16 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
 
         app = requireNotNull(activity).application as TemplatePokeTestApplication
 
-        viewModel = initViewModel()
+        viewModel = ViewModelProvider(this, ViewModelCreator(app.repository))
+            .get(MyBackpackViewModel::class.java)
+
+        viewModel.allInBackpack()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.myPokemonsObservable.observe(this, Observer {
+        viewModel.pokemonsInMyBackpack.observe(viewLifecycleOwner, Observer {
             progress.visibility = View.GONE
             my_pokemons.visibility = View.VISIBLE
 
@@ -60,20 +62,9 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
         // .makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")
 
         this.startActivity(Intent().apply {
-            setClass(this@MyBackpackFragment.context!!, PokeDetailActivity::class.java)
+            setClass(requireContext(), PokeDetailActivity::class.java)
             putExtra(POKEMON, pokemon)
         })
-    }
-
-    private fun initViewModel(): MyBackpackViewModel {
-        val customVMProvider = CustomViewModelProvider(
-            app.networkRepository,
-            app.persistenceRepository
-        )
-
-        return ViewModelProviders
-            .of(this, customVMProvider)
-            .get(MyBackpackViewModel::class.java)
     }
 
     companion object {

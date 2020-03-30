@@ -8,10 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 @Entity
 public class PokemonEntity {
-    @NonNull
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private String id;
+    private Integer id;
     @ColumnInfo(name = "type")
     private String type;
     @ColumnInfo(name = "name")
@@ -28,11 +27,11 @@ public class PokemonEntity {
     private long capturedAt;
 
     @NotNull
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(@NotNull String id) {
+    public void setId(@NotNull Integer id) {
         this.id = id;
     }
 

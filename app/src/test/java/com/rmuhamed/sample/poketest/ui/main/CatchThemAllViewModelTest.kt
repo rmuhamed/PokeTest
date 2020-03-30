@@ -1,79 +1,84 @@
 package com.rmuhamed.sample.poketest.ui.main
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
-import com.rmuhamed.sample.poketest.data.IRepository
+import com.rmuhamed.sample.poketest.CoroutineTestRule
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
-import org.junit.Assert.assertNotNull
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.internal.verification.Times
 import java.util.concurrent.Future
 
+@ExperimentalCoroutinesApi
 class CatchThemAllViewModelTest {
-    val mockedRepo = mock<IRepository<Pokemon>>()
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var coroutineTestRule = CoroutineTestRule()
+
+    private val mockedRepository = mock<Repository<Pokemon>>()
 
     lateinit var viewModel: CatchThemAllViewModel
 
-    private val poke = Pokemon.Builder().setId("1").build()
+    private val fakePokemon = Pokemon.Builder().setId(1).build()
 
     @Before
     fun setUp() {
+        viewModel = CatchThemAllViewModel(mockedRepository)
+    }
 
-        val futureExists = mock<Future<Boolean>> {
-            on { get() } doReturn false
+    @Test
+    fun should_have_a_value_if_search_a_pokemon() {
+        //given
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            whenever(mockedRepository.findBy(any())).thenReturn(fakePokemon)
         }
-
-        val findByFuture = mock<Future<Pokemon>> {
-            on { get() } doReturn poke
-        }
-
-        val saveFuture = mock<Future<Boolean>> {
-            on { get() } doReturn true
-        }
-
-        whenever(mockedRepo.exists(any())).thenReturn(futureExists)
-        whenever(mockedRepo.findBy(any())).thenReturn(findByFuture)
-        whenever(mockedRepo.save(any())).thenReturn(saveFuture)
-
-        viewModel = CatchThemAllViewModel(mockedRepo, mockedRepo)
-    }
-
-    @Test
-    fun test_PokemonInfoObservable() {
-        assertNotNull(viewModel.pokemonInfoObservable)
-    }
-
-    @Test
-    fun test_CatchItButtonObservable() {
-        assertNotNull(viewModel.catchItButtonObservable)
-    }
-
-    @Test
-    fun test_CaughtPokemonObservable() {
-        assertNotNull(viewModel.caughtPokemonObservable)
-    }
-
-    @Test
-    fun test_LetsFindAnyPokemon() {
+        //when
         viewModel.letsFindAnyPokemon()
-
-        //One at init, the second because we are explicitly calling the method
-        verify(mockedRepo, times(2)).findBy(any())
+        //then
+        assertEquals(fakePokemon.id, viewModel.pokemon.value!!.id )
     }
 
     @Test
-    fun test_CatchPokemon() {
-        viewModel.catchPokemon(poke)
-
-        verify(mockedRepo, Times(1)).save(poke)
+    fun should_get_true_if_Pokemon_was_caught() {
+        //given
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            whenever(mockedRepository.save(any())).thenReturn(true)
+        }
+        //when
+        viewModel.catchPokemon(fakePokemon)
+        //then
+        assertTrue(viewModel.caughtPokemon.value!!)
     }
 
     @Test
-    fun test_checkIfPokemonHasBeenCaught() {
-        viewModel.checkIfPokemonHasBeenCaught(poke)
+    fun should_get_not_possible_to_catch_if_the_kind_of_pokemon_is_in_the_backpack() {
+        //given
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            whenever(mockedRepository.exists(any())).thenReturn(true)
+        }
+        //when
+        viewModel.checkIfPokemonIsInBackpack(fakePokemon)
+        //then
+        assertFalse(viewModel.canWeCatchIt.value!!)
+    }
 
-
-        //One at init, the second because we are explicitly calling the method
-        verify(mockedRepo, Times(2)).exists(poke.id)
+    @Test
+    fun should_possible_to_catch_if_the_kind_of_pokemon_is_not_in_the_backpack() {
+        //given
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            whenever(mockedRepository.exists(any())).thenReturn(false)
+        }
+        //when
+        viewModel.checkIfPokemonIsInBackpack(fakePokemon)
+        //then
+        assertTrue(viewModel.canWeCatchIt.value!!)
     }
 }

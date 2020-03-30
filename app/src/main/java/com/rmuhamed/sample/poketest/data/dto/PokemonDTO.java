@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PokemonDTO {
     @SerializedName("id")
-    private String id;
+    private Integer id;
     @SerializedName("name")
     private String name;
     @SerializedName("base_experience")
@@ -68,15 +68,15 @@ public class PokemonDTO {
         this.name = name;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public class Types {
+    public static class Types {
         @SerializedName("type")
         private Type type;
 
@@ -89,7 +89,7 @@ public class PokemonDTO {
         }
     }
 
-    public class Type {
+    public static class Type {
         @SerializedName("name")
         private String name;
 
@@ -102,7 +102,7 @@ public class PokemonDTO {
         }
     }
 
-    public class Sprites {
+    public static class Sprites {
         @SerializedName("front_default")
         private String front;
 

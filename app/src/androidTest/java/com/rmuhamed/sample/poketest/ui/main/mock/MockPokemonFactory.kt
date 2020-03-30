@@ -4,7 +4,7 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 
 object MockPokemonFactory {
 
-    fun create(id: String, name: String): Pokemon =
+    fun create(id: Int, name: String): Pokemon =
         Pokemon.Builder()
             .setId(id)
             .setHeight("80")

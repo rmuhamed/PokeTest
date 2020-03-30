@@ -1,30 +1,35 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import com.nhaarman.mockitokotlin2.doReturn
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
-import com.rmuhamed.sample.poketest.data.IRepository
+import com.nhaarman.mockitokotlin2.whenever
+import com.rmuhamed.sample.poketest.CoroutineTestRule
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.internal.verification.Times
-import java.util.concurrent.Future
 
+@ExperimentalCoroutinesApi
 class MyBackpackViewModelTest {
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
-    val mockedFuture = mock<Future<List<Pokemon>>> {
-        on { get() } doReturn emptyList()
-    }
+    @get:Rule
+    var coroutineTestRule = CoroutineTestRule()
 
-    @Mock
-    val mockedRepo = mock<IRepository<Pokemon>> {
-        on { all } doReturn mockedFuture
-    }
+    private val fakePokemon = Pokemon.Builder()
+        .setId(1)
+        .setName("Pikachu")
+        .build()
 
-    lateinit var viewModel: MyBackpackViewModel
+    private val mockedRepo = mock<Repository<Pokemon>>()
+
+    private lateinit var viewModel: MyBackpackViewModel
 
     @Before
     fun setUp() {
@@ -33,8 +38,13 @@ class MyBackpackViewModelTest {
 
     @Test
     fun test_GetMyPokemonsObservable() {
-        Mockito.verify(mockedRepo, Times(1)).all
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            whenever(mockedRepo.all()).thenReturn(listOf(fakePokemon))
+        }
 
-        assertNotNull(viewModel.myPokemonsObservable)
+        viewModel.allInBackpack()
+
+        assertNotNull(viewModel.pokemonsInMyBackpack.value)
+        assertTrue(viewModel.pokemonsInMyBackpack.value!!.isNotEmpty())
     }
 }

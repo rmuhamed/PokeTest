@@ -8,5 +8,5 @@ import retrofit2.http.Path
 interface RestApiDefinition {
 
     @GET("pokemon/{id}")
-    fun fetchBy(@Path("id") id: String): Call<PokemonDTO>
+    suspend fun fetchBy(@Path("id") id: Int): PokemonDTO
 }

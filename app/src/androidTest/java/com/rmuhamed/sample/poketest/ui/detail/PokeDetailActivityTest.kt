@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PokeDetailActivityTest {
     private val pokeIntent = Intent(ApplicationProvider.getApplicationContext(), PokeDetailActivity::class.java).apply {
-        putExtra(IntentConstants.POKEMON, MockPokemonFactory.create("1", "Fake"))
+        putExtra(IntentConstants.POKEMON, MockPokemonFactory.create(1, "Fake"))
     }
 
     @get:Rule
