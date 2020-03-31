@@ -1,33 +1,26 @@
 package com.rmuhamed.sample.poketest.ui.main.mock
 
-import com.rmuhamed.sample.poketest.data.IRepository
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
-class MockRepository(private val executorService: ExecutorService) : IRepository<Pokemon> {
+class MockRepository() : Repository<Pokemon> {
 
-    override fun findBy(id: String?): Future<Pokemon> {
-        return executorService.submit(Callable {
-            MockPokemonFactory.create("1", "fake")
-        })
-    }
+    override suspend fun findBy(id: Int): Pokemon = MockPokemonFactory.create(1, "fakePokemon")
 
-    override fun getAll(): Future<MutableList<Pokemon>> {
-        return executorService.submit(Callable {
-            getPokemonList()
-        })
-    }
+    override suspend fun all(): List<Pokemon> = getPokemonList()
 
-    override fun exists(id: String?): Future<Boolean> {
-        return executorService.submit(Callable { false })
-    }
+    override suspend fun exists(pokemon: Pokemon): Boolean = false
+
+    override suspend fun save(toBeSaved: Pokemon): Boolean = true
 
     private fun getPokemonList(): MutableList<Pokemon> {
         val pokemonList = mutableListOf<Pokemon>()
-        IntRange(1,10).forEach {
-            pokemonList.add(MockPokemonFactory.create(it.toString(), "Fake$it"))
+        IntRange(1, 10).forEach { pokemonId ->
+            pokemonList.add(MockPokemonFactory.create(pokemonId, "Pokemon$pokemonId"))
         }
         return pokemonList
     }

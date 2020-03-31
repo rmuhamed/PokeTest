@@ -1,7 +1,7 @@
 package com.rmuhamed.sample.poketest.util
 
-fun randomizeGet(min: Int, max: Int): Int = if (min < max) {
-    min.rangeTo(max).shuffled().first()
+fun inBetween(min: Int, max: Int): Int = if (min < max) {
+    min.rangeTo(max).random()
 } else {
     -1
 }

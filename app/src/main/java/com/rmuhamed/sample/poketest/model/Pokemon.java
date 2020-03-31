@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public final class Pokemon implements Parcelable {
     private static final String FORMAT = "dd-MM-yy HH:mm";
-    private String id;
+    private Integer id;
     private String type;
     private String name;
     private String picture;
@@ -31,7 +31,7 @@ public final class Pokemon implements Parcelable {
     }
 
     protected Pokemon(Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         type = in.readString();
         name = in.readString();
         picture = in.readString();
@@ -57,7 +57,7 @@ public final class Pokemon implements Parcelable {
         return name;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -101,7 +101,7 @@ public final class Pokemon implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(type);
         dest.writeString(name);
         dest.writeString(picture);
@@ -113,7 +113,7 @@ public final class Pokemon implements Parcelable {
 
     public static class Builder {
         private String name;
-        private String id;
+        private Integer id;
         private String type;
         private String picture;
         private String weight;
@@ -126,7 +126,7 @@ public final class Pokemon implements Parcelable {
             return this;
         }
 
-        public Builder setId(String id) {
+        public Builder setId(Integer id) {
             this.id = id;
 
             return this;

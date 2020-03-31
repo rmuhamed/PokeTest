@@ -1,20 +1,22 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rmuhamed.sample.poketest.data.IRepository
+import androidx.lifecycle.viewModelScope
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
+import kotlinx.coroutines.launch
 
-class MyBackpackViewModel(private val persistenceRepository: IRepository<Pokemon>) : ViewModel() {
-    val myPokemonsObservable = MutableLiveData<List<Pokemon>>()
+class MyBackpackViewModel(private val repository: Repository<Pokemon>) : ViewModel() {
+    private var _inBackpack = MutableLiveData<List<Pokemon>>()
 
-    init {
-        getAllFromBackpack()
-    }
+    val pokemonsInMyBackpack: LiveData<List<Pokemon>>
+        get() = _inBackpack
 
-    @VisibleForTesting
-    internal fun getAllFromBackpack() {
-        myPokemonsObservable.postValue(persistenceRepository.all.get())
+    fun allInBackpack() {
+        viewModelScope.launch {
+            _inBackpack.value = repository.all()
+        }
     }
 }

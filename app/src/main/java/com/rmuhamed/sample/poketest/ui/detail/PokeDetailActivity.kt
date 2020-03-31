@@ -8,6 +8,7 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
 import com.rmuhamed.sample.poketest.ui.view.paintFrom
 import kotlinx.android.synthetic.main.activity_poke_detail.*
+import java.util.*
 
 class PokeDetailActivity : AppCompatActivity() {
 
@@ -20,7 +21,7 @@ class PokeDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         collapsing_toolbar.apply {
-            title = pokemon?.name?.capitalize() ?: context.getString(R.string.no_name_placeholder)
+            title = pokemon?.name ?: context.getString(R.string.no_name_placeholder)
             setCollapsedTitleTextColor(ContextCompat.getColor(this@PokeDetailActivity, R.color.white))
             setExpandedTitleColor(ContextCompat.getColor(this@PokeDetailActivity, R.color.white))
         }

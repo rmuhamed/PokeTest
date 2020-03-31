@@ -1,41 +1,53 @@
 package com.rmuhamed.sample.poketest.ui.main
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rmuhamed.sample.poketest.data.IRepository
+import androidx.lifecycle.viewModelScope
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.rmuhamed.sample.poketest.util.randomizeGet
+import com.rmuhamed.sample.poketest.util.inBetween
+import kotlinx.coroutines.launch
 import java.util.*
 
 open class CatchThemAllViewModel(
-    private val networkRepository: IRepository<Pokemon>,
-    private val persistenceRepository: IRepository<Pokemon>
+    private val repository: Repository<Pokemon>
 ) : ViewModel() {
-    val pokemonInfoObservable = MutableLiveData<Pokemon>()
-    val catchItButtonObservable = MutableLiveData<Boolean>()
-    val caughtPokemonObservable = MutableLiveData<Boolean>()
+    private var _caughtPokemon = MutableLiveData<Boolean>()
+    private var _canWeCatchIt = MutableLiveData<Boolean>()
+    private var _pokemon = MutableLiveData<Pokemon>()
 
-    init {
-        letsFindAnyPokemon()
-    }
+    val pokemon: LiveData<Pokemon>
+        get() = _pokemon
+
+    val caughtPokemon: LiveData<Boolean>
+        get() = _caughtPokemon
+
+    val canWeCatchIt: LiveData<Boolean>
+        get() = _canWeCatchIt
 
     fun catchPokemon(pokemon: Pokemon) {
         pokemon.capturedAt = Date()
-        caughtPokemonObservable.postValue(persistenceRepository.save(pokemon).get())
+
+        viewModelScope.launch {
+            val succeed = repository.save(pokemon)
+            _caughtPokemon.value = succeed
+        }
     }
 
     fun letsFindAnyPokemon() {
-        val pokemon = networkRepository.findBy(randomizeGet(1, 200).toString()).get()
-        pokemonInfoObservable.postValue(pokemon)
-
-        checkIfPokemonHasBeenCaught(pokemon)
+        viewModelScope.launch {
+            val pokemon = repository.findBy(inBetween(1, 250))
+            _pokemon.value = pokemon
+        }
     }
 
-    @VisibleForTesting
-    fun checkIfPokemonHasBeenCaught(pokemon: Pokemon) {
-        val haveItInBackpack = persistenceRepository.exists(pokemon.id).get()
-        catchItButtonObservable.postValue(!haveItInBackpack)
+    fun checkIfPokemonIsInBackpack(pokemon: Pokemon) {
+         viewModelScope.launch {
+            val inBackpack = repository.exists(pokemon)
+             _canWeCatchIt.value = !inBackpack
+        }
     }
 }
 
