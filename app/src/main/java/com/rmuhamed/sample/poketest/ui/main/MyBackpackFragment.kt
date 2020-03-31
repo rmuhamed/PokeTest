@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rmuhamed.sample.poketest.R
@@ -20,17 +21,16 @@ import kotlinx.android.synthetic.main.my_backpack_fragment.*
 
 
 class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
+    private val viewModel by viewModels<MyBackpackViewModel> {
+        ViewModelCreator(app.repository)
+    }
 
     private lateinit var app: TemplatePokeTestApplication
-    private lateinit var viewModel: MyBackpackViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         app = requireNotNull(activity).application as TemplatePokeTestApplication
-
-        viewModel = ViewModelProvider(this, ViewModelCreator(app.repository))
-            .get(MyBackpackViewModel::class.java)
 
         viewModel.allInBackpack()
     }
@@ -44,8 +44,8 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
 
             my_pokemons.apply {
                 adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
-                    override fun onPokemonSelected(pokemon: Pokemon, pokemonImage: AppCompatImageView) {
-                        showDetailsOf(pokemon, pokemonImage)
+                    override fun onPokemonSelected(pokemon: Pokemon) {
+                        showDetailsOf(pokemon)
                     }
                 })
                 setHasFixedSize(true)
@@ -53,10 +53,7 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
         })
     }
 
-    private fun showDetailsOf(
-        pokemon: Pokemon,
-        pokemonImage: AppCompatImageView
-    ) {
+    private fun showDetailsOf(pokemon: Pokemon) {
 
         //val options = ActivityOptionsCompat
         // .makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")

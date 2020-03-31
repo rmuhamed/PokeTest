@@ -1,19 +1,17 @@
 package com.rmuhamed.sample.poketest.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockitokotlin2.*
 import com.rmuhamed.sample.poketest.CoroutineTestRule
-import com.rmuhamed.sample.poketest.data.Repository
+import com.rmuhamed.sample.poketest.data.PokemonRepository
 import com.rmuhamed.sample.poketest.model.Pokemon
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.internal.verification.Times
-import java.util.concurrent.Future
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito
 
 @ExperimentalCoroutinesApi
 class CatchThemAllViewModelTest {
@@ -23,7 +21,7 @@ class CatchThemAllViewModelTest {
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
-    private val mockedRepository = mock<Repository<Pokemon>>()
+    private val mockedRepository = Mockito.mock(PokemonRepository::class.java)
 
     lateinit var viewModel: CatchThemAllViewModel
 
@@ -38,7 +36,7 @@ class CatchThemAllViewModelTest {
     fun should_have_a_value_if_search_a_pokemon() {
         //given
         coroutineTestRule.testDispatcher.runBlockingTest {
-            whenever(mockedRepository.findBy(any())).thenReturn(fakePokemon)
+            Mockito.`when`(mockedRepository.findBy(any())).thenReturn(fakePokemon)
         }
         //when
         viewModel.letsFindAnyPokemon()
@@ -50,7 +48,7 @@ class CatchThemAllViewModelTest {
     fun should_get_true_if_Pokemon_was_caught() {
         //given
         coroutineTestRule.testDispatcher.runBlockingTest {
-            whenever(mockedRepository.save(any())).thenReturn(true)
+            Mockito.`when`(mockedRepository.save(any())).thenReturn(true)
         }
         //when
         viewModel.catchPokemon(fakePokemon)
@@ -62,7 +60,7 @@ class CatchThemAllViewModelTest {
     fun should_get_not_possible_to_catch_if_the_kind_of_pokemon_is_in_the_backpack() {
         //given
         coroutineTestRule.testDispatcher.runBlockingTest {
-            whenever(mockedRepository.exists(any())).thenReturn(true)
+            Mockito.`when`(mockedRepository.exists(any())).thenReturn(true)
         }
         //when
         viewModel.checkIfPokemonIsInBackpack(fakePokemon)
@@ -74,7 +72,7 @@ class CatchThemAllViewModelTest {
     fun should_possible_to_catch_if_the_kind_of_pokemon_is_not_in_the_backpack() {
         //given
         coroutineTestRule.testDispatcher.runBlockingTest {
-            whenever(mockedRepository.exists(any())).thenReturn(false)
+            Mockito.`when`(mockedRepository.exists(any())).thenReturn(false)
         }
         //when
         viewModel.checkIfPokemonIsInBackpack(fakePokemon)

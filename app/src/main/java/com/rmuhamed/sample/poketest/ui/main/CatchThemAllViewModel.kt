@@ -1,19 +1,16 @@
 package com.rmuhamed.sample.poketest.ui.main
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rmuhamed.sample.poketest.data.Repository
+import com.rmuhamed.sample.poketest.data.PokemonRepository
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.util.inBetween
 import kotlinx.coroutines.launch
 import java.util.*
 
-open class CatchThemAllViewModel(
-    private val repository: Repository<Pokemon>
-) : ViewModel() {
+class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewModel() {
     private var _caughtPokemon = MutableLiveData<Boolean>()
     private var _canWeCatchIt = MutableLiveData<Boolean>()
     private var _pokemon = MutableLiveData<Pokemon>()
@@ -44,9 +41,9 @@ open class CatchThemAllViewModel(
     }
 
     fun checkIfPokemonIsInBackpack(pokemon: Pokemon) {
-         viewModelScope.launch {
+        viewModelScope.launch {
             val inBackpack = repository.exists(pokemon)
-             _canWeCatchIt.value = !inBackpack
+            _canWeCatchIt.value = !inBackpack
         }
     }
 }

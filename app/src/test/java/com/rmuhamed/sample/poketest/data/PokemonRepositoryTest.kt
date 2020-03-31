@@ -1,9 +1,5 @@
 package com.rmuhamed.sample.poketest.data
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import com.rmuhamed.sample.poketest.config.RestApiDefinition
 import com.rmuhamed.sample.poketest.data.dao.PokemonDAO
 import com.rmuhamed.sample.poketest.data.dao.PokemonEntity
@@ -12,14 +8,14 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.Mockito
 
 class PokemonRepositoryTest {
-    private val apiDefinition: RestApiDefinition = mock()
+    private val apiDefinition = Mockito.mock(RestApiDefinition::class.java)
 
-    private val dao: PokemonDAO = mock()
+    private val dao = Mockito.mock(PokemonDAO::class.java)
     private lateinit var SUT: PokemonRepository
 
     @Before
@@ -28,7 +24,7 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun test_FindBy() {
+    fun check_findBy() {
         val types = PokemonDTO.Types().also {
             it.type = PokemonDTO.Type().also { type ->
                 type.name = "type" }
@@ -45,7 +41,7 @@ class PokemonRepositoryTest {
         }
 
         runBlocking {
-            whenever(apiDefinition.fetchBy(any())).thenReturn(fakeDTO)
+            Mockito.`when`(apiDefinition.fetchBy(anyInt())).thenReturn(fakeDTO)
         }
 
         val pokemon = runBlocking {
@@ -56,7 +52,7 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun test_GetAll() {
+    fun check_getAll() {
         val fakeEntityList = mutableListOf(PokemonEntity())
         fakeEntityList[0].apply {
             id = 1
@@ -64,7 +60,7 @@ class PokemonRepositoryTest {
         }
 
         runBlocking {
-            whenever(dao.findAll()).thenReturn(fakeEntityList)
+            Mockito.`when`(dao.findAll()).thenReturn(fakeEntityList)
         }
 
         val pokemonList = runBlocking {
