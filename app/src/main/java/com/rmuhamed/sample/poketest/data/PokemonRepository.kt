@@ -8,10 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
-class PokemonRepository internal constructor(
-    private val dao: PokemonDAO,
-    private val api: RestApiDefinition
-) : Repository<Pokemon> {
+class PokemonRepository(private val dao: PokemonDAO, private val api: RestApiDefinition):
+    Repository<Pokemon> {
 
     override suspend fun findBy(id: Int): Pokemon {
         return withContext(Dispatchers.IO) {

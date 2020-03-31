@@ -43,7 +43,7 @@ class MyBackpackAdapter(private val pokemons: List<Pokemon>?, private val itemVi
 
         fun onClickHandler(onItemClickHandler: MyBackpackItemViewHandler, pokemon: Pokemon) {
             view.setOnClickListener {
-                onItemClickHandler.onPokemonSelected(pokemon, view.pokemon_picture_image)
+                onItemClickHandler.onPokemonSelected(pokemon)
             }
         }
     }

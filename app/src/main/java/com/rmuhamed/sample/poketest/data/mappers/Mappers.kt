@@ -7,7 +7,7 @@ import java.util.*
 
 object Mappers {
     @JvmStatic
-    fun toDBEntity(from: Pokemon): PokemonEntity {
+    infix fun toDBEntity(from: Pokemon): PokemonEntity {
         val entity = PokemonEntity()
         entity.id = from.id
         entity.name = from.name
@@ -22,7 +22,7 @@ object Mappers {
     }
 
     @JvmStatic
-    fun toBusinessObject(from: PokemonEntity): Pokemon {
+    infix fun toBusinessObject(from: PokemonEntity): Pokemon {
         val pokemon = Pokemon.Builder()
             .setId(from.id)
             .setType(from.type)
@@ -38,29 +38,19 @@ object Mappers {
     }
 
     @JvmStatic
+    infix fun toBusinessObject(from: PokemonDTO): Pokemon =
+        Pokemon.Builder()
+            .setId(from.id)
+            .setHeight(from.height)
+            .setName(from.name)
+            .setWeight(from.weight)
+            .setBaseExperience(from.baseExperience)
+            .setType(from.types[0].type.name)
+            .setPicture(from.sprites.front)
+            .build()
+
+    @JvmStatic
     fun toBusinessObject(entities: List<PokemonEntity>): List<Pokemon> {
-        return entities.map { toBusinessObject(it) }
-    }
-
-    @JvmStatic
-    fun toDBEntity(entities: List<Pokemon>): List<PokemonEntity> {
-        return entities.map { toDBEntity(it) }
-    }
-
-    @JvmStatic
-    fun toBusinessObject(from: PokemonDTO?): Pokemon? {
-        var aPokemon: Pokemon? = null
-        if (from != null) {
-            aPokemon = Pokemon.Builder()
-                .setId(from.id)
-                .setHeight(from.height)
-                .setName(from.name)
-                .setWeight(from.weight)
-                .setBaseExperience(from.baseExperience)
-                .setType(from.types[0].type.name)
-                .setPicture(from.sprites.front)
-                .build()
-        }
-        return aPokemon
+        return entities.map(::toBusinessObject)
     }
 }
