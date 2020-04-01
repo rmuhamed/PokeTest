@@ -6,11 +6,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.ViewModelCreator
+import com.rmuhamed.sample.poketest.ui.view.from
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
 open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
