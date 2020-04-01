@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface RestApiDefinition {
+interface PokeAPIDefinition {
 
     @GET("pokemon/{id}")
     suspend fun fetchBy(@Path("id") id: Int): PokemonDTO

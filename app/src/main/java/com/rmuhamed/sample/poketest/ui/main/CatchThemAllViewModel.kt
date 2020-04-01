@@ -15,7 +15,10 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
     private var _canWeCatchIt = MutableLiveData<Boolean>()
     private var _pokemon = MutableLiveData<Pokemon>()
 
-    val pokemon: LiveData<Pokemon>
+    val pokemon: Pokemon?
+        get() = pokemonObservable.value
+
+    val pokemonObservable: LiveData<Pokemon>
         get() = _pokemon
 
     val caughtPokemon: LiveData<Boolean>
@@ -24,12 +27,16 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
     val canWeCatchIt: LiveData<Boolean>
         get() = _canWeCatchIt
 
-    fun catchPokemon(pokemon: Pokemon) {
-        pokemon.capturedAt = Date()
+    fun catchPokemon() {
+        pokemon?.let {
+            it.capturedAt = Date()
 
-        viewModelScope.launch {
-            val succeed = repository.save(pokemon)
-            _caughtPokemon.value = succeed
+            viewModelScope.launch {
+                val succeed = repository.save(it)
+                _caughtPokemon.value = succeed
+            } ?: run {
+                //Error
+            }
         }
     }
 
@@ -40,10 +47,14 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
         }
     }
 
-    fun checkIfPokemonIsInBackpack(pokemon: Pokemon) {
-        viewModelScope.launch {
-            val inBackpack = repository.exists(pokemon)
-            _canWeCatchIt.value = !inBackpack
+    fun checkIfPokemonIsInBackpack() {
+        pokemon?.let {
+            viewModelScope.launch {
+                val inBackpack = repository.exists(it)
+                _canWeCatchIt.value = !inBackpack
+            }
+        } ?: run {
+            //ERROR
         }
     }
 }

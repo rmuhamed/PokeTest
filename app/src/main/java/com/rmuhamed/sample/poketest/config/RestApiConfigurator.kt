@@ -21,11 +21,11 @@ object RestApiConfigurator {
     }
 
     @JvmStatic
-    fun createApi(baseUrl: String): RestApiDefinition {
+    fun createApi(baseUrl: String): PokeAPIDefinition {
         if (retrofit == null) {
             retrofit = this.configure(baseUrl)
         }
 
-        return retrofit!!.create(RestApiDefinition::class.java)
+        return retrofit!!.create(PokeAPIDefinition::class.java)
     }
 }

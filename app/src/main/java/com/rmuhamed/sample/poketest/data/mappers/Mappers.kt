@@ -6,23 +6,20 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 import java.util.*
 
 object Mappers {
-    @JvmStatic
-    infix fun toDBEntity(from: Pokemon): PokemonEntity {
-        val entity = PokemonEntity()
-        entity.id = from.id
-        entity.name = from.name
-        entity.type = from.type
-        entity.baseExperience = from.baseExperience
-        entity.height = from.height
-        entity.weight = from.weight
-        entity.picture = from.picture
-        entity.capturedAt = from.capturedAt.time
 
-        return entity
+    fun toDBEntity(from: Pokemon): PokemonEntity =
+        PokemonEntity().also {
+            it.id = from.id
+            it.name = from.name
+            it.type = from.type
+            it.baseExperience = from.baseExperience
+            it.height = from.height
+            it.weight = from.weight
+            it.picture = from.picture
+            it.capturedAt = from.capturedAt.time
     }
 
-    @JvmStatic
-    infix fun toBusinessObject(from: PokemonEntity): Pokemon {
+    fun toBusinessObject(from: PokemonEntity): Pokemon {
         val pokemon = Pokemon.Builder()
             .setId(from.id)
             .setType(from.type)
@@ -37,8 +34,7 @@ object Mappers {
         return pokemon
     }
 
-    @JvmStatic
-    infix fun toBusinessObject(from: PokemonDTO): Pokemon =
+    fun toBusinessObject(from: PokemonDTO): Pokemon =
         Pokemon.Builder()
             .setId(from.id)
             .setHeight(from.height)
@@ -48,9 +44,4 @@ object Mappers {
             .setType(from.types[0].type.name)
             .setPicture(from.sprites.front)
             .build()
-
-    @JvmStatic
-    fun toBusinessObject(entities: List<PokemonEntity>): List<Pokemon> {
-        return entities.map(::toBusinessObject)
-    }
 }

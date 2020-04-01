@@ -26,7 +26,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
 
         skip_it_button.setOnClickListener { viewModel.letsFindAnyPokemon() }
         catch_it_button.setOnClickListener { buttonView ->
-            viewModel.catchPokemon(buttonView.tag as Pokemon)
+            viewModel.catchPokemon()
         }
     }
 
@@ -41,7 +41,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.pokemon.observe(viewLifecycleOwner, Observer { pokemon ->
+        viewModel.pokemonObservable.observe(viewLifecycleOwner, Observer { pokemon ->
             loading.visibility = View.INVISIBLE
             skip_it_button.visibility = View.VISIBLE
 
@@ -49,7 +49,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
             pokemon_card_view.from(pokemon)
 
             catch_it_button.tag = pokemon
-            viewModel.checkIfPokemonIsInBackpack(pokemon)
+            viewModel.checkIfPokemonIsInBackpack()
         })
 
         viewModel.canWeCatchIt.observe(viewLifecycleOwner, Observer {

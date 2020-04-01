@@ -1,6 +1,6 @@
 package com.rmuhamed.sample.poketest.data
 
-import com.rmuhamed.sample.poketest.config.RestApiDefinition
+import com.rmuhamed.sample.poketest.config.PokeAPIDefinition
 import com.rmuhamed.sample.poketest.data.dao.PokemonDAO
 import com.rmuhamed.sample.poketest.data.dao.PokemonEntity
 import com.rmuhamed.sample.poketest.data.dto.PokemonDTO
@@ -8,12 +8,11 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito
 
 class PokemonRepositoryTest {
-    private val apiDefinition = Mockito.mock(RestApiDefinition::class.java)
+    private val apiDefinition = Mockito.mock(PokeAPIDefinition::class.java)
 
     private val dao = Mockito.mock(PokemonDAO::class.java)
     private lateinit var SUT: PokemonRepository
