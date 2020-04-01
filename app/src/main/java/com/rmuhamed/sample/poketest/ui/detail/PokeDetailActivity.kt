@@ -1,6 +1,8 @@
 package com.rmuhamed.sample.poketest.ui.detail
 
 import android.os.Bundle
+import android.transition.Explode
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.rmuhamed.sample.poketest.R
@@ -8,12 +10,19 @@ import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
 import com.rmuhamed.sample.poketest.ui.view.paintFrom
 import kotlinx.android.synthetic.main.activity_poke_detail.*
-import java.util.*
 
 class PokeDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+
+            // set an exit transition
+            exitTransition = Explode()
+        }
+
         setContentView(R.layout.activity_poke_detail)
 
         val pokemon = intent.getParcelableExtra<Pokemon>(POKEMON)

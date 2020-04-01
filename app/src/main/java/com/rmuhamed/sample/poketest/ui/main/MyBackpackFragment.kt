@@ -1,5 +1,6 @@
 package com.rmuhamed.sample.poketest.ui.main
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.my_backpack_fragment.*
 
 
 class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
+
     private val viewModel by viewModels<MyBackpackViewModel> {
         ViewModelCreator(app.repository)
     }
@@ -54,14 +56,10 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
     }
 
     private fun showDetailsOf(pokemon: Pokemon) {
-
-        //val options = ActivityOptionsCompat
-        // .makeSceneTransitionAnimation(this.activity as Activity, pokemonImage, "Image")
-
         this.startActivity(Intent().apply {
             setClass(requireContext(), PokeDetailActivity::class.java)
             putExtra(POKEMON, pokemon)
-        })
+        }, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
     }
 
     companion object {
