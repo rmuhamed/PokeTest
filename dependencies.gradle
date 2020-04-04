@@ -1,0 +1,86 @@
+rootProject.ext {
+    def appcompat_version = '1.1.0'
+    def constraint_layout_version = '1.1.3'
+    def core_ktx_version = '1.2.0'
+    def activity_ktx_version = '1.1.0'
+    def fragment_ktx_version = '1.2.4'
+    def lifecycle_ktx_version = '2.2.0'
+    def material_components_version = '1.1.0'
+    def room_runtime_version = '2.2.5'
+    def room_compiler_version = '2.2.5'
+    def room_ktx_version = '2.2.5'
+    def retrofit_version = '2.8.1'
+    def converter_gson_version = '2.8.1'
+    def logging_interceptor_version = '4.2.2'
+    def coroutines_version = '1.3.0'
+    def coroutines_testing_version = '1.3.4'
+    def picasso_version = '2.71828'
+    def junit_version = '4.13'
+    def mockito_core_version = '3.3.0'
+    def androidx_arch_core_testing_version = '2.1.0'
+    def androidx_core_testing_version = '1.2.0'
+    def androidx_junit_version = '1.1.1'
+    def espresso_core_version = '3.2.0'
+    def mockito_android_version = '2.28.2'
+
+    kotlin = [
+            stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    ]
+
+    androidx_ktx = [
+            activity_ktx: "androidx.activity:activity-ktx:$activity_ktx_version",
+            fragment_ktx: "androidx.fragment:fragment-ktx:$fragment_ktx_version",
+            core_ktx    : "androidx.core:core-ktx:$core_ktx_version"
+    ]
+
+    androidx_compat = [
+            appcompat: "androidx.appcompat:appcompat:$appcompat_version"
+    ]
+
+    ui = [
+            material_components: "com.google.android.material:material:$material_components_version",
+            constraint_layout  : "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    ]
+
+    lifecycle = [
+            lifecyle_ktx: "androidx.lifecycle:lifecycle-extensions:$lifecycle_ktx_version"
+    ]
+
+    room = [
+            room_runtime: "androidx.room:room-runtime:$room_runtime_version",
+            room_ktx    : "androidx.room:room-ktx:$room_ktx_version"
+    ]
+
+    room_annotation_processor = [
+            room_compiler: "androidx.room:room-compiler:$room_compiler_version"
+    ]
+
+    retrofit = [
+            retrofit_client        : "com.squareup.retrofit2:retrofit:$retrofit_version",
+            retrofit_gson_converter: "com.squareup.retrofit2:converter-gson:$converter_gson_version",
+            okhttp3_logging        : "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+    ]
+
+    coroutines = [
+            coroutines_android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
+            coroutines_testing: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_testing_version"
+    ]
+
+    picasso = [
+            picasso: "com.squareup.picasso:picasso:$picasso_version"
+    ]
+
+    testing = [
+            junit: "junit:junit:$junit_version",
+            mockito: "org.mockito:mockito-core:$mockito_core_version",
+            androidx_arch_test_core: "androidx.arch.core:core-testing:$androidx_arch_core_testing_version",
+            androix_test_core: "androidx.test:core:$androidx_core_testing_version"
+    ]
+
+    ui_testing = [
+            junit: "androidx.test.ext:junit:$androidx_junit_version",
+            espresso: "androidx.test.espresso:espresso-core:$espresso_core_version",
+            mockito_android: "org.mockito:mockito-android:$mockito_android_version"
+    ]
+}
+
