@@ -20,3 +20,10 @@
 /captures
 .externalNativeBuild
 .cxx
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/encodings.xml
+/.idea/jarRepositories.xml
+/.idea/markdown-navigator.xml
+/.idea/markdown-navigator-enh.xml
+/.idea/dictionaries/rmuhamed.xml
