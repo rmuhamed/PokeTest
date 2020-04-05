@@ -45,7 +45,7 @@ before_script:
 script:
     - echo "Starting build"
     - ./gradlew clean
-    - ./gradlew jacocoTestReport
+    - ./gradlew testDebug
 
 
 after_success:
