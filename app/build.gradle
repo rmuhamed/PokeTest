@@ -18,7 +18,22 @@ android {
         versionName "0.0.1"
 
         testInstrumentationRunner "com.rmuhamed.sample.poketest.ui.main.runner.MockAndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+                arg("room.incremental", "true")
+                arg("room.expandProjection", "true")
+            }
+
+            javacOptions {
+                // Increase the max count of errors from annotation processors.
+                // Default is 100.
+                option("-Xmaxerrs", 500)
+            }
+        }
     }
+
     buildTypes {
         debug {
             buildConfigField "String", "DB_NAME", '"pokemon-db"'
@@ -35,6 +50,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
