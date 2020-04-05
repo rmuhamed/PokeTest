@@ -3,6 +3,7 @@ package com.rmuhamed.sample.poketest.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.rmuhamed.sample.poketest.R
 import kotlinx.android.synthetic.main.activity_poke_test.*
 
@@ -29,10 +30,9 @@ class PokeTestActivity : AppCompatActivity() {
     }
 
     private fun load(fragmentInstance: Fragment, tag: String) {
-        supportFragmentManager
-            .beginTransaction()
-            .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-            .add(R.id.fragment_container, fragmentInstance, tag)
-            .commit()
+        supportFragmentManager.commit {
+            setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+            add(R.id.fragment_container, fragmentInstance, tag)
+        }
     }
 }
