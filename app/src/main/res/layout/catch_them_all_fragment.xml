@@ -15,6 +15,8 @@
         app:cardCornerRadius="@dimen/margin_normal"
         app:cardElevation="@dimen/margin_small"
         android:layout_margin="@dimen/margin_big"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -105,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/pokemon_card_view"
         tools:visibility="visible" />
 
-    <ProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/loading"
         android:layout_width="@dimen/progress"
         android:layout_height="@dimen/progress"
@@ -113,7 +115,6 @@
         app:layout_constraintBottom_toBottomOf="@id/pokemon_card_view"
         app:layout_constraintLeft_toLeftOf="@id/pokemon_card_view"
         app:layout_constraintRight_toRightOf="@id/pokemon_card_view"
-        app:layout_constraintTop_toTopOf="@id/pokemon_card_view"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toTopOf="@id/pokemon_card_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.ViewModelCreator
+import com.rmuhamed.sample.poketest.ui.ViewState
 import com.rmuhamed.sample.poketest.ui.view.from
 import kotlinx.android.synthetic.main.catch_them_all_fragment.*
 
@@ -25,9 +26,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         skip_it_button.setOnClickListener { viewModel.letsFindAnyPokemon() }
-        catch_it_button.setOnClickListener { buttonView ->
-            viewModel.catchPokemon()
-        }
+        catch_it_button.setOnClickListener { viewModel.catchPokemon() }
     }
 
     override fun onAttach(context: Context) {
@@ -42,14 +41,20 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.pokemonObservable.observe(viewLifecycleOwner, Observer { pokemon ->
-            loading.visibility = View.INVISIBLE
             skip_it_button.visibility = View.VISIBLE
 
             pokemon_card_view.visibility = View.VISIBLE
             pokemon_card_view.from(pokemon)
 
-            catch_it_button.tag = pokemon
             viewModel.checkIfPokemonIsInBackpack()
+        })
+
+        viewModel.state.observe(viewLifecycleOwner, Observer { viewState ->
+            when(viewState) {
+                ViewState.LOADING -> loading.show()
+                ViewState.LOADED -> loading.hide()
+                else -> loading.hide()
+            }
         })
 
         viewModel.canWeCatchIt.observe(viewLifecycleOwner, Observer {

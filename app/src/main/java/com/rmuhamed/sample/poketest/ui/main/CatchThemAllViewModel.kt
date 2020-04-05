@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rmuhamed.sample.poketest.data.PokemonRepository
 import com.rmuhamed.sample.poketest.model.Pokemon
+import com.rmuhamed.sample.poketest.ui.ViewState
 import com.rmuhamed.sample.poketest.util.inBetween
 import kotlinx.coroutines.launch
 import java.util.*
@@ -14,6 +15,7 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
     private var _caughtPokemon = MutableLiveData<Boolean>()
     private var _canWeCatchIt = MutableLiveData<Boolean>()
     private var _pokemon = MutableLiveData<Pokemon>()
+    private var _viewState = MutableLiveData<ViewState>()
 
     val pokemon: Pokemon?
         get() = pokemonObservable.value
@@ -27,6 +29,9 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
     val canWeCatchIt: LiveData<Boolean>
         get() = _canWeCatchIt
 
+    val state: LiveData<ViewState>
+        get() = _viewState
+
     fun catchPokemon() {
         pokemon?.let {
             it.capturedAt = Date()
@@ -34,16 +39,18 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
             viewModelScope.launch {
                 val succeed = repository.save(it)
                 _caughtPokemon.value = succeed
-            } ?: run {
-                //Error
             }
+        } ?: run {
+            _viewState.value = ViewState.ERROR
         }
     }
 
     fun letsFindAnyPokemon() {
         viewModelScope.launch {
+            _viewState.value = ViewState.LOADING
             val pokemon = repository.findBy(inBetween(1, 250))
             _pokemon.value = pokemon
+            _viewState.value = ViewState.LOADED
         }
     }
 
@@ -54,7 +61,7 @@ class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewMod
                 _canWeCatchIt.value = !inBackpack
             }
         } ?: run {
-            //ERROR
+            _viewState.value = ViewState.ERROR
         }
     }
 }
