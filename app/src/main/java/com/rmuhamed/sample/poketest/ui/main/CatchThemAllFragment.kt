@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
-import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.ViewModelCreator
 import com.rmuhamed.sample.poketest.ui.ViewState
 import com.rmuhamed.sample.poketest.ui.view.from

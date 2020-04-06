@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rmuhamed.sample.poketest.data.PokemonRepository
+import com.rmuhamed.sample.poketest.data.Repository
 import com.rmuhamed.sample.poketest.model.Pokemon
 import com.rmuhamed.sample.poketest.ui.ViewState
 import com.rmuhamed.sample.poketest.util.inBetween
 import kotlinx.coroutines.launch
 import java.util.*
 
-class CatchThemAllViewModel(private val repository: PokemonRepository) : ViewModel() {
+class CatchThemAllViewModel(private val repository: Repository<Pokemon>) : ViewModel() {
     private var _caughtPokemon = MutableLiveData<Boolean>()
     private var _canWeCatchIt = MutableLiveData<Boolean>()
     private var _pokemon = MutableLiveData<Pokemon>()

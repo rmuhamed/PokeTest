@@ -10,7 +10,9 @@ import com.rmuhamed.sample.poketest.ui.main.MyBackpackViewModel
 class ViewModelCreator(private val repository: Repository<Pokemon>) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        modelClass
-            .getConstructor(repository::class.java)
-            .newInstance(repository)
+        when (modelClass) {
+            CatchThemAllViewModel::class.java -> CatchThemAllViewModel(repository) as T
+            MyBackpackViewModel::class.java -> MyBackpackViewModel(repository) as T
+            else -> throw ClassNotFoundException("ViewModel wasn't found")
+        }
 }
