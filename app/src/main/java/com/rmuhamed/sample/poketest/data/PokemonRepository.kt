@@ -6,6 +6,7 @@ import com.rmuhamed.sample.poketest.data.mappers.Mappers.toBusinessObject
 import com.rmuhamed.sample.poketest.data.mappers.Mappers.toDBEntity
 import com.rmuhamed.sample.poketest.model.Pokemon
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 class PokemonRepository(private val dao: PokemonDAO, private val api: PokeAPIDefinition):
@@ -13,6 +14,7 @@ class PokemonRepository(private val dao: PokemonDAO, private val api: PokeAPIDef
 
     override suspend fun findBy(id: Int): Pokemon {
         return withContext(Dispatchers.IO) {
+            delay(2000)
             val dto = api.fetchBy(id)
             toBusinessObject(dto)
         }
@@ -20,6 +22,7 @@ class PokemonRepository(private val dao: PokemonDAO, private val api: PokeAPIDef
 
     override suspend fun all(): List<Pokemon> {
         return withContext(Dispatchers.IO) {
+            delay(2000)
             dao.findAll().map(::toBusinessObject)
         }
     }
