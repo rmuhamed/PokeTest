@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="@color/light_grey"
-                                                   android:orientation="vertical"
-                                                   tools:context=".ui.main.MyBackpackFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey"
+        android:orientation="vertical"
+        tools:context=".ui.main.MyBackpackFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_pokemons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_pokemon"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
             tools:itemCount="5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"
-            android:visibility="visible"
-            tools:visibility="visible"/>
+            tools:listitem="@layout/item_pokemon"
+            tools:visibility="visible" />
 
-    <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="@dimen/progress"
-            android:layout_height="@dimen/progress"
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="@dimen/button_height"
+            android:layout_height="@dimen/button_height"
+            android:indeterminateTint="@color/lime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"
-            tools:visibility="gone"
-    />
+            app:layout_constraintBottom_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

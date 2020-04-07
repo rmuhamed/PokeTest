@@ -46,7 +46,7 @@ class CatchThemAllViewModel(private val repository: Repository<Pokemon>) : ViewM
     }
 
     fun letsFindAnyPokemon() {
-        viewModelScope.launch {
+        viewModelScope.launch() {
             _viewState.value = ViewState.LOADING
             val pokemon = repository.findBy(inBetween(1, 250))
             _pokemon.value = pokemon

@@ -44,8 +44,8 @@ class MyBackpackViewModelTest {
         //when
         viewModel.allInBackpack()
         //then
-        assertNotNull(viewModel.pokemonsInMyBackpack.value)
-        assertTrue(viewModel.pokemonsInMyBackpack.value!!.isNotEmpty())
+        assertNotNull(viewModel.inMyBackpack.value)
+        assertTrue(viewModel.inMyBackpack.value!!.isNotEmpty())
     }
 
     @Test
@@ -57,7 +57,7 @@ class MyBackpackViewModelTest {
         //when
         viewModel.allInBackpack()
         //then
-        assertNotNull(viewModel.pokemonsInMyBackpack.value)
-        assertTrue(viewModel.pokemonsInMyBackpack.value!!.isEmpty())
+        assertNotNull(viewModel.inMyBackpack.value)
+        assertTrue(viewModel.inMyBackpack.value!!.isEmpty())
     }
 }

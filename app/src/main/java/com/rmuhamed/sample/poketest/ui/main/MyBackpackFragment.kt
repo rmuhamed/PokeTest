@@ -5,16 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.rmuhamed.sample.poketest.R
 import com.rmuhamed.sample.poketest.TemplatePokeTestApplication
 import com.rmuhamed.sample.poketest.model.Pokemon
-import com.rmuhamed.sample.poketest.ui.ViewModelCreator
 import com.rmuhamed.sample.poketest.ui.IntentConstants.POKEMON
+import com.rmuhamed.sample.poketest.ui.ViewModelCreator
+import com.rmuhamed.sample.poketest.ui.ViewState
 import com.rmuhamed.sample.poketest.ui.detail.PokeDetailActivity
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackAdapter
 import com.rmuhamed.sample.poketest.ui.main.adapters.MyBackpackItemViewHandler
@@ -40,10 +39,18 @@ class MyBackpackFragment : Fragment(R.layout.my_backpack_fragment) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.pokemonsInMyBackpack.observe(viewLifecycleOwner, Observer {
-            progress.visibility = View.GONE
-            my_pokemons.visibility = View.VISIBLE
+        viewModel.state.observe(viewLifecycleOwner, Observer { viewState ->
+            when (viewState) {
+                ViewState.LOADING -> loading.show()
+                ViewState.LOADED -> {
+                    loading.hide()
+                    my_pokemons.visibility = View.VISIBLE
+                }
+                else -> loading.hide()
+            }
+        })
 
+        viewModel.inMyBackpack.observe(viewLifecycleOwner, Observer {
             my_pokemons.apply {
                 adapter = MyBackpackAdapter(it, object : MyBackpackItemViewHandler {
                     override fun onPokemonSelected(pokemon: Pokemon) {

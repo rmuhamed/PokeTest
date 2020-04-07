@@ -40,18 +40,24 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.pokemonObservable.observe(viewLifecycleOwner, Observer { pokemon ->
-            skip_it_button.visibility = View.VISIBLE
-
-            pokemon_card_view.visibility = View.VISIBLE
             pokemon_card_view.from(pokemon)
 
             viewModel.checkIfPokemonIsInBackpack()
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer { viewState ->
-            when(viewState) {
-                ViewState.LOADING -> loading.show()
-                ViewState.LOADED -> loading.hide()
+            when (viewState) {
+                ViewState.LOADING -> {
+                    loading.show()
+                    pokemon_card_view.visibility = View.GONE
+                    skip_it_button.visibility = View.GONE
+                    catch_it_button.visibility = View.GONE
+                }
+                ViewState.LOADED -> {
+                    loading.hide()
+                    pokemon_card_view.visibility = View.VISIBLE
+                    skip_it_button.visibility = View.VISIBLE
+                }
                 else -> loading.hide()
             }
         })
@@ -61,7 +67,7 @@ open class CatchThemAllFragment : Fragment(R.layout.catch_them_all_fragment) {
         })
 
         viewModel.caughtPokemon.observe(viewLifecycleOwner, Observer {
-            catch_it_button.visibility = View.GONE
+            catch_it_button.visibility = View.INVISIBLE
             viewModel.letsFindAnyPokemon()
         })
     }
